@@ -32,6 +32,8 @@ postgres_web3 is in a pre-1.0 state and precise building instructions have not b
 
 postgres_web3 uses the C23 (awating finalization) bit precise integer type (`_BitInt`) to represent its integers types and to implement mathematical operations. As of April 2023 (time of writing), it is likely that trying to build against a default postgres installation will fail as PGXS will not use a compiler supporting this feature until C23 is widely supported. As such, building postgresql with a compiler supporting this feature (clang-16 for example), then building the extension is the recommended method.
 
+postgres_web3 uses the `__builtin_[op]_overflow` family of functions to implement overflow checked mathematical operatons. These functions are available on modern GCC and Clang compilers but not MSVC. As we do not currently implement a fallback for this compiler-specific feature, compilers not supporting this feature are unable to compile the extension.
+
 In order to compile, you must have `pg_config` present in your path and run `make`.
 
 To install, run `make install` (this may require sudo access).
