@@ -19,8 +19,8 @@ In order to address these issues, postgres_web3 adds fixed signed and unsigned i
 
 - `int128` A signed 128 bit integer
 - ~~`int256` A signed 256 bit integer~~ (TODO)
-- ~~`uint128` A signed 128 bit integer~~ (TODO)
-- ~~`uint256` A signed 256 bit integer~~ (TODO)
+- ~~`uint128` A unsigned 128 bit integer~~ (TODO)
+- ~~`uint256` A unsigned 256 bit integer~~ (TODO)
 - ~~`hex256` A 256 bit hex string (Such as ethereum block hashes)~~ (TODO)
 - ~~`hex160` A 160 bit hex string (Such as ethereum addresses)~~ (TODO)
 
