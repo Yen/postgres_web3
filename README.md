@@ -11,7 +11,7 @@ A PostgreSQL extension implementing a collection of optimized data types for web
 
 # Rational
 
-Current mainstream databases do not contain data types capable of representing larger integers and binary types used in the web3 ecosyste without compromise. Certain domain specific databases do have better support, but they are often not useful as a general purpose database. In postgres, we can represent web3 domain specific data with either `text` or `numeric`, but these have downsides as they have considerably performance and storage implications as well as their lack of integer operators.
+Current mainstream databases do not contain data types capable of representing larger integers and binary types used in the web3 ecosystem without compromise. Certain domain specific databases do have better support, but they are often not useful as a general purpose database. In postgres, we can represent web3 domain specific data with either `text` or `numeric`, but these have downsides as they have considerably performance and storage implications as well as their lack of integer operators.
 
 In order to address these issues, postgres_web3 adds fixed signed and unsigned integers as well as binary types with a full suite of operators and conversion functions in order to make using data more performant, efficient, and easier to implement.
 
@@ -30,7 +30,7 @@ _More data types may be added in the future if they are seen to be prevelant thr
 
 postgres_web3 is in a pre-1.0 state and precise building instructions have not been finalized.
 
-postgres_web3 uses the C23 (awating finalization) bit precise integer type (`_BitInt`) to represent its integers types and to implement mathematical operations. As of April 2023 (time of writing), it is likely that trying to build against a default postges installation will fail as PGXS will not use a compiler supporting this feature until C23 is widely supported. As such building postgresql with a compiler supporting this feature (clang-16 for example), then building the extension is the recommended method.
+postgres_web3 uses the C23 (awating finalization) bit precise integer type (`_BitInt`) to represent its integers types and to implement mathematical operations. As of April 2023 (time of writing), it is likely that trying to build against a default postgres installation will fail as PGXS will not use a compiler supporting this feature until C23 is widely supported. As such, building postgresql with a compiler supporting this feature (clang-16 for example), then building the extension is the recommended method.
 
 In order to compile, you must have `pg_config` present in your path and run `make`.
 
