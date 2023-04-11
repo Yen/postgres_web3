@@ -1,6 +1,0 @@
-{
-    "files.associations": {
-        "postgres.h": "c",
-        "fmgr.h": "c"
-    }
-}
