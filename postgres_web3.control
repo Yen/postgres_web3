@@ -1,3 +1,3 @@
-comment = 'Optimized types for web3 applications'
+comment = 'A collection of optimized data types for web3 applications'
 default_version = '1.0'
 relocatable = false
