@@ -4,12 +4,12 @@ A PostgreSQL extension implementing a collection of optimized data types for web
 
 **WARNING:** postgres_web3 is not in a completed state despite the version number of the extension being 1.0, as such no explicit attempts to maintain backwards compatibility or upgradability are being made at this time.
 
-- [Rational](#rational)
+- [Rationale](#rationale)
 - [Data types](#data-types)
 - [Compiling and installing](#compiling-and-installing)
 - [Usage](#usage)
 
-# Rational
+# Rationale
 
 Current mainstream databases do not contain data types capable of representing larger integers and binary types used in the web3 ecosystem without compromise. Certain domain specific databases do have better support, but they are often not useful as a general purpose database. In postgres, we can represent web3 domain specific data with either `text` or `numeric`, but these have downsides as they have considerably performance and storage implications as well as their lack of integer operators.
 
