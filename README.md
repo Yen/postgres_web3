@@ -51,7 +51,7 @@ _More data types may be added in the future if they are seen to be prevelant thr
 
 ## Available casts
 
-Casts in postgres can by default require an explicit cast operator (`::type`). They can also be fully implicit or only implicit on assignment. [See the PostgreSQL documentation for more info.](https://www.postgresql.org/docs/current/sql-createcast.html)
+Casts in postgres can by default require an explicit cast operator (`::type`). They can also be fully implicit or only implicit on assignment. [See the PostgreSQL documentation for more info.](https://www.postgresql.org/docs/15/sql-createcast.html)
 
 |From          |As `smallint`|As `integer`|As `bigint`|As `int128`|
 |---           |---          |---         |---        |---        |
