@@ -145,7 +145,7 @@ LANGUAGE C IMMUTABLE;
 -- int128 cast functions
 
 CREATE FUNCTION int128_as_int2(int128)
-RETURNS bigint
+RETURNS smallint
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
@@ -155,7 +155,7 @@ AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
 CREATE FUNCTION int128_as_int8(int128)
-RETURNS smallint
+RETURNS bigint
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
