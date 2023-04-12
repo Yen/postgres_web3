@@ -26,13 +26,56 @@ In order to address these issues, postgres_web3 adds fixed signed and unsigned i
 
 _More data types may be added in the future if they are seen to be prevelant throughout the web3 ecosystem. postgres_web3 is not tied to ethereum and may adopt types that are seen as beneficial to non-ethereum chains._
 
+## Available operators
+
+- add (`type + type`) -> `type` for `int128`
+- sub (`type - type`) -> `type` for `int128`
+- mul (`type * type`) -> `type` for `int128`
+- div (`type / type`) -> `type` for `int128`
+- mod (`type % type`) -> `type` for `int128`
+- lt (`type < type`) -> `boolean` for `int128`
+- gt (`type > type`) -> `boolean` for `int128`
+- lteq (`type <= type`) -> `boolean` for `int128`
+- gteq (`type >= type`) -> `boolean` for `int128`
+- eq (`type = type`) -> `boolean` for `int128`
+- neq (`type <> type`) -> `boolean` for `int128`
+- uplus (`+type`) -> `type` for `int128`
+- uminus (`-type`) -> `type` for `int128`
+- abs (`@type`) -> `type` for `int128`
+- bitand (`type & type`) -> `type` for `int128`
+- bitor (`type | type`) -> `type` for `int128`
+- bitxor (`type # type`) -> `type` for `int128`
+- bitnot (`~type`) -> `type` for `int128`
+- bitshiftleft (`type << integer`) -> `type` for `int128`
+- bitshiftright (`type >> integer`) -> `type` for `int128`
+
+## Available casts
+
+Casts in postgres can by default require an explicit cast operator (`::type`). They can also be fully implicit or only implicit on assignment. [See the PostgreSQL documentation for more info.](https://www.postgresql.org/docs/current/sql-createcast.html)
+
+|From          |As `smallint`|As `integer`|As `bigint`|As `int128`|
+|---           |---          |---         |---        |---        |
+|**`smallint`**|             |implicit    |implicit   |implicit   |
+|**`integer`** |assignment   |            |implicit   |implicit   |
+|**`bigint`**  |assignment   |assignment  |           |implicit   |
+|**`int128`**  |assignment   |assignment  |assignment |           |
+
+## Available aggregates
+
+- `sum(type)` -> `type` for `int128`
+- `min(type)` -> `type` for `int128`
+- `max(type)` -> `type` for `int128`
+- `avg(type)` -> `double precision` for `int128`
+
+_The `avg(type)` family of aggregates are only implemented using a `double precision` return type and as such, are not accurate for larger sums._
+
 # Compiling and installing
 
 postgres_web3 is in a pre-1.0 state and precise building instructions have not been finalized.
 
-postgres_web3 uses the C23 (awating finalization) bit precise integer type (`_BitInt`) to represent its integers types and to implement mathematical operations. As of April 2023 (time of writing), it is likely that trying to build against a default postgres installation will fail as PGXS will not use a compiler supporting this feature until C23 is widely supported. As such, building postgresql with a compiler supporting this feature (clang-16 for example), then building the extension is the recommended method.
+postgres_web3 uses the C23 bit precise integer type (`_BitInt`) to represent its integers types and to implement mathematical operations. As of April 2023 (time of writing), it is likely that trying to build against a default postgres installation will fail as PGXS will not use a compiler supporting this feature until C23 is widely supported. As such, building postgresql with a compiler supporting this feature (clang-16 for example), then building the extension is the recommended method.
 
-postgres_web3 uses the `__builtin_[op]_overflow` family of functions to implement overflow checked mathematical operatons. These functions are available on modern GCC and Clang compilers but not MSVC. As we do not currently implement a fallback for this compiler-specific feature, compilers not supporting this feature are unable to compile the extension.
+postgres_web3 uses the `__builtin_[op]_overflow` family of functions to implement overflow checked mathematical operatons. These functions are available on modern GCC and Clang compilers but not MSVC. As we do not currently implement a fallback for this compiler-specific feature, compilers not supporting this feature are unable to compile the extension. C23 will bring `<stdckdint.h>` and a family of C23 standard checked mathematical functions, we will likely switch to these functions once widely supported.
 
 In order to compile, you must have `pg_config` present in your path and run `make`.
 

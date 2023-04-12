@@ -115,34 +115,61 @@ RETURNS int128
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
+-- int128 aggregate functions
+
+CREATE FUNCTION int128_min(int128, int128)
+RETURNS int128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int128_max(int128, int128)
+RETURNS int128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int128_avg_accum(internal, int128)
+RETURNS internal
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE;
+
+CREATE FUNCTION int128_avg_combine(internal, internal)
+RETURNS internal
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE;
+
+CREATE FUNCTION int128_avg_final(internal)
+RETURNS double precision
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE;
+
 -- int128 cast functions
 
 CREATE FUNCTION int128_as_int2(int128)
-RETURNS int2
+RETURNS bigint
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
 CREATE FUNCTION int128_as_int4(int128)
-RETURNS int4
+RETURNS integer
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
 CREATE FUNCTION int128_as_int8(int128)
-RETURNS int8
+RETURNS smallint
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
-CREATE FUNCTION int2_as_int128(int2)
+CREATE FUNCTION int2_as_int128(smallint)
 RETURNS int128
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
-CREATE FUNCTION int4_as_int128(int4)
+CREATE FUNCTION int4_as_int128(integer)
 RETURNS int128
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
-CREATE FUNCTION int8_as_int128(int8)
+CREATE FUNCTION int8_as_int128(bigint)
 RETURNS int128
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
@@ -159,140 +186,170 @@ CREATE TYPE int128(
 -- int128 operators
 
 CREATE OPERATOR +(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_add,
-    commutator = +
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_add,
+    COMMUTATOR = +
 );
 
 CREATE OPERATOR -(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_sub
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_sub
 );
 
 CREATE OPERATOR *(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_mul,
-    commutator = *
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_mul,
+    COMMUTATOR = *
 );
 
 CREATE OPERATOR /(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_div
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_div
 );
 
 CREATE OPERATOR %(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_mod
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_mod
 );
 
 CREATE OPERATOR <(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_lt,
-    negator = >=
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_lt,
+    NEGATOR = >=
 );
 
 CREATE OPERATOR >(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_gt,
-    negator = <=
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_gt,
+    NEGATOR = <=
 );
 
 CREATE OPERATOR <=(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_lteq,
-    negator = >
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_lteq,
+    NEGATOR = >
 );
 
 CREATE OPERATOR >=(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_gteq,
-    negator = <
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_gteq,
+    NEGATOR = <
 );
 
 CREATE OPERATOR =(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_eq,
-    commutator = =,
-    negator = <>
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_eq,
+    COMMUTATOR = =,
+    NEGATOR = <>
 );
 
 CREATE OPERATOR <>(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_neq,
-    commutator = <>,
-    negator = =
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_neq,
+    COMMUTATOR = <>,
+    NEGATOR = =
 );
 
 CREATE OPERATOR +(
-    rightarg = int128,
-    function = int128_uplus
+    RIGHTARG = int128,
+    FUNCTION = int128_uplus
 );
 
 CREATE OPERATOR -(
-    rightarg = int128,
-    function = int128_uminus
+    RIGHTARG = int128,
+    FUNCTION = int128_uminus
 );
 
 CREATE OPERATOR @(
-    rightarg = int128,
-    function = int128_abs
+    RIGHTARG = int128,
+    FUNCTION = int128_abs
 );
 
 CREATE OPERATOR &(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_bitand,
-    commutator = &
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_bitand,
+    COMMUTATOR = &
 );
 
 CREATE OPERATOR |(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_bitor,
-    commutator = |
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_bitor,
+    COMMUTATOR = |
 );
 
 CREATE OPERATOR #(
-    leftarg = int128,
-    rightarg = int128,
-    function = int128_bitxor,
-    commutator = #
+    LEFTARG = int128,
+    RIGHTARG = int128,
+    FUNCTION = int128_bitxor,
+    COMMUTATOR = #
 );
 
 CREATE OPERATOR ~(
-    rightarg = int128,
-    function = int128_bitnot
+    RIGHTARG = int128,
+    FUNCTION = int128_bitnot
 );
 
 CREATE OPERATOR <<(
-    leftarg = int128,
-    rightarg = integer,
-    function = int128_bitshiftleft
+    LEFTARG = int128,
+    RIGHTARG = integer,
+    FUNCTION = int128_bitshiftleft
 );
 
 CREATE OPERATOR >>(
-    leftarg = int128,
-    rightarg = integer,
-    function = int128_bitshiftright
+    LEFTARG = int128,
+    RIGHTARG = integer,
+    FUNCTION = int128_bitshiftright
 );
 
 -- int128 casts
 
-CREATE CAST (int128 as int2) WITH FUNCTION int128_as_int2 AS ASSIGNMENT;
-CREATE CAST (int128 as int4) WITH FUNCTION int128_as_int4 AS ASSIGNMENT;
-CREATE CAST (int128 as int8) WITH FUNCTION int128_as_int8 AS ASSIGNMENT;
+CREATE CAST (int128 as smallint) WITH FUNCTION int128_as_int2 AS ASSIGNMENT;
+CREATE CAST (int128 as integer) WITH FUNCTION int128_as_int4 AS ASSIGNMENT;
+CREATE CAST (int128 as bigint) WITH FUNCTION int128_as_int8 AS ASSIGNMENT;
 
-CREATE CAST (int2 as int128) WITH FUNCTION int2_as_int128 AS IMPLICIT;
-CREATE CAST (int4 as int128) WITH FUNCTION int4_as_int128 AS IMPLICIT;
-CREATE CAST (int8 as int128) WITH FUNCTION int8_as_int128 AS IMPLICIT;
+CREATE CAST (smallint as int128) WITH FUNCTION int2_as_int128 AS IMPLICIT;
+CREATE CAST (integer as int128) WITH FUNCTION int4_as_int128 AS IMPLICIT;
+CREATE CAST (bigint as int128) WITH FUNCTION int8_as_int128 AS IMPLICIT;
+
+-- int128 aggregates
+
+CREATE AGGREGATE sum(int128) (
+    SFUNC = int128_add,
+    STYPE = int128,
+    COMBINEFUNC = int128_add,
+    initcond = '0'
+);
+
+CREATE AGGREGATE min(int128) (
+    SFUNC = int128_min,
+    STYPE = int128,
+    SORTOP = <,
+    COMBINEFUNC = int128_min
+);
+
+CREATE AGGREGATE max(int128) (
+    SFUNC = int128_max,
+    STYPE = int128,
+    SORTOP = >,
+    COMBINEFUNC = int128_max
+);
+
+CREATE AGGREGATE avg(int128) (
+    SFUNC = int128_avg_accum,
+    STYPE = internal,
+    COMBINEFUNC = int128_avg_combine,
+    FINALFUNC = int128_avg_final
+);
