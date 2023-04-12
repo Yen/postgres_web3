@@ -64,9 +64,7 @@ Datum int128_in(PG_FUNCTION_ARGS)
         goto invalid_syntax;
     }
 
-    pw3_int128 *data = palloc(sizeof(pw3_int128));
-    *data = acc;
-    PW3_RETURN_INT128(data);
+    PW3_RETURN_INT128(pw3_int128_palloc(acc));
 
 out_of_range:
     ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("value \"%s\" is out of range for type %s", str, "int128")));

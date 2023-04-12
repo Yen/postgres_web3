@@ -37,25 +37,19 @@ PG_FUNCTION_INFO_V1(int2_as_int128);
 Datum int2_as_int128(PG_FUNCTION_ARGS)
 {
     int16 value = PG_GETARG_INT16(0);
-    pw3_int128 *result = palloc(sizeof(pw3_int128));
-    *result = value;
-    PW3_RETURN_INT128(result);
+    PW3_RETURN_INT128(pw3_int128_palloc(value));
 }
 
 PG_FUNCTION_INFO_V1(int4_as_int128);
 Datum int4_as_int128(PG_FUNCTION_ARGS)
 {
     int32 value = PG_GETARG_INT32(0);
-    pw3_int128 *result = palloc(sizeof(pw3_int128));
-    *result = value;
-    PW3_RETURN_INT128(result);
+    PW3_RETURN_INT128(pw3_int128_palloc(value));
 }
 
 PG_FUNCTION_INFO_V1(int8_as_int128);
 Datum int8_as_int128(PG_FUNCTION_ARGS)
 {
     int64 value = PG_GETARG_INT64(0);
-    pw3_int128 *result = palloc(sizeof(pw3_int128));
-    *result = value;
-    PW3_RETURN_INT128(result);
+    PW3_RETURN_INT128(pw3_int128_palloc(value));
 }
