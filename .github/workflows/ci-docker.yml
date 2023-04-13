@@ -40,7 +40,7 @@ jobs:
             georgebott/postgres_web3:alpine
             georgebott/postgres_web3:15-alpine
             georgebott/postgres_web3:15.2-alpine
-            ghcr.io/Yen/postgres_web3:latest
-            ghcr.io/Yen/postgres_web3:alpine
-            ghcr.io/Yen/postgres_web3:15-alpine
-            ghcr.io/Yen/postgres_web3:15.2-alpine
+            ghcr.io/yen/postgres_web3:latest
+            ghcr.io/yen/postgres_web3:alpine
+            ghcr.io/yen/postgres_web3:15-alpine
+            ghcr.io/yen/postgres_web3:15.2-alpine
