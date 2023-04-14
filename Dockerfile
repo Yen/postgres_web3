@@ -4,7 +4,7 @@
 # original dockerfile
 # https://github.com/docker-library/postgres/tree/25b3034e9b0155c3e71acaf650243e7d12a571c1/15/alpine
 
-FROM alpine:edge
+FROM alpine:20230329
 
 # 70 is the standard uid/gid for "postgres" in Alpine
 # https://git.alpinelinux.org/aports/tree/main/postgresql/postgresql.pre-install?h=3.12-stable
@@ -26,11 +26,8 @@ ENV PG_MAJOR 15
 ENV PG_VERSION 15.2
 ENV PG_SHA256 99a2171fc3d6b5b5f56b757a7a3cb85d509a38e4273805def23941ed2b8468c7
 
-# copy the postgres_web3 soufces
-RUN mkdir -p /usr/src/postgres_web3
-COPY Makefile postgres_web3--*.sql postgres_web3.control README.postgres_web3 /usr/src/postgres_web3
-COPY src /usr/src/postgres_web3/src
-
+# build and install postgresql, we do this as its own layer
+# so that we we dont have to rebuild postgresql every time
 RUN set -eux; \
 	\
 	wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"; \
@@ -124,9 +121,6 @@ RUN set -eux; \
 	make -j "$(nproc)" world; \
 	make install-world; \
 	make -C contrib install; \
-#	make and install postgres_web3
-	make -C /usr/src/postgres_web3 -j "$(nproc)"; \
-	make -C /usr/src/postgres_web3 install; \
 	\
 	runDeps="$( \
 		scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
@@ -153,12 +147,28 @@ RUN set -eux; \
 	cd /; \
 	rm -rf \
 		/usr/src/postgresql \
-		/usr/src/postgres_web3 \
 		/usr/local/share/doc \
 		/usr/local/share/man \
 	; \
 	\
 	postgres --version
+
+# copy the postgres_web3 sources
+RUN mkdir -p /usr/src/postgres_web3
+COPY Makefile postgres_web3--*.sql postgres_web3.control README.postgres_web3 /usr/src/postgres_web3
+COPY src /usr/src/postgres_web3/src
+
+# make and install postgres_web3
+RUN set -eux; \
+	\
+	apk add --no-cache --virtual .build-deps \
+		libc-dev \
+		clang16 \
+		make; \
+	make -C /usr/src/postgres_web3 -j "$(nproc)"; \
+	make -C /usr/src/postgres_web3 install; \
+	rm -rf /usr/src/postgres_web3; \
+	apk del --no-network .build-deps
 
 # make the sample config easier to munge (and "correct by default")
 RUN set -eux; \
