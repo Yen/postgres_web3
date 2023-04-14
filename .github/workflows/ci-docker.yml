@@ -1,11 +1,9 @@
 name: ci-docker
 
 on:
-  # our dockerfile is not optimized at all for caching and takes ages
-  # so for now we are going to only dispatch it manually
-  # push:
-  #   branches:
-  #     - main
+  push:
+   branches:
+    - main
   workflow_dispatch:
 
 jobs:
