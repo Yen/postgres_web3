@@ -1,5 +1,7 @@
 # postgres_web3
 
+[![ci-docker](https://github.com/Yen/postgres_web3/actions/workflows/ci-docker.yml/badge.svg)](https://github.com/Yen/postgres_web3/actions/workflows/ci-docker.yml)
+
 A PostgreSQL extension implementing a collection of optimized data types for web3 applications, _and other applications with coinciding requirements_.
 
 **WARNING:** postgres_web3 is not in a completed state despite the version number of the extension being 1.0, as such no explicit attempts to maintain backwards compatibility or upgradability are being made at this time.
