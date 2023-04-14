@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+          platforms: linux/386,linux/amd64,linux/arm64
           tags: |
             georgebott/postgres_web3:latest
             georgebott/postgres_web3:alpine
@@ -48,3 +48,5 @@ jobs:
             ghcr.io/yen/postgres_web3:alpine
             ghcr.io/yen/postgres_web3:15-alpine
             ghcr.io/yen/postgres_web3:15.2-alpine
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
