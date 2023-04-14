@@ -32,17 +32,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       -
-        name: Pull latest images
-        run: |
-            docker pull georgebott/postgres_web3:latest
-            docker pull georgebott/postgres_web3:alpine
-            docker pull georgebott/postgres_web3:15-alpine
-            docker pull georgebott/postgres_web3:15.2-alpine
-            docker pull ghcr.io/yen/postgres_web3:latest
-            docker pull ghcr.io/yen/postgres_web3:alpine
-            docker pull ghcr.io/yen/postgres_web3:15-alpine
-            docker pull ghcr.io/yen/postgres_web3:15.2-alpine
-      -
         name: Build and push
         uses: docker/build-push-action@v4
         with:
@@ -59,5 +48,14 @@ jobs:
             ghcr.io/yen/postgres_web3:alpine
             ghcr.io/yen/postgres_web3:15-alpine
             ghcr.io/yen/postgres_web3:15.2-alpine
-          cache-from: type=gha
+          cache-from: |
+            type=gha
+            georgebott/postgres_web3:latest
+            georgebott/postgres_web3:alpine
+            georgebott/postgres_web3:15-alpine
+            georgebott/postgres_web3:15.2-alpine
+            ghcr.io/yen/postgres_web3:latest
+            ghcr.io/yen/postgres_web3:alpine
+            ghcr.io/yen/postgres_web3:15-alpine
+            ghcr.io/yen/postgres_web3:15.2-alpine
           cache-to: type=gha,mode=max
