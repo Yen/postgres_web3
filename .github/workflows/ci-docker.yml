@@ -1,11 +1,9 @@
 name: ci-docker
 
 on:
-  # our dockerfile is not optimized at all for caching and takes ages
-  # so for now we are going to only dispatch it manually
   # push:
-  #   branches:
-  #     - main
+  #  branches:
+  #   - main
   workflow_dispatch:
 
 jobs:
@@ -33,6 +31,17 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Pull latest images
+        run: |
+            docker pull georgebott/postgres_web3:latest
+            docker pull georgebott/postgres_web3:alpine
+            docker pull georgebott/postgres_web3:15-alpine
+            docker pull georgebott/postgres_web3:15.2-alpine
+            docker pull ghcr.io/yen/postgres_web3:latest
+            docker pull ghcr.io/yen/postgres_web3:alpine
+            docker pull ghcr.io/yen/postgres_web3:15-alpine
+            docker pull ghcr.io/yen/postgres_web3:15.2-alpine
       -
         name: Build and push
         uses: docker/build-push-action@v4
