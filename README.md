@@ -11,6 +11,8 @@ A PostgreSQL extension implementing a collection of optimized data types for web
 
 ## Docker container images
 
+Container images are available for `linux/386`, `linux/amd64`, and `linux/arm64`. The postgres_web3 image may build on other platforms.
+
 - [Docker Hub](https://hub.docker.com/r/georgebott/postgres_web3)
 - [Github Container Registry](https://ghcr.io/yen/postgres_web3)
 
