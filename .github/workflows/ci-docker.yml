@@ -49,7 +49,6 @@ jobs:
             ghcr.io/yen/postgres_web3:15-alpine
             ghcr.io/yen/postgres_web3:15.2-alpine
           cache-from: |
-            type=gha
             georgebott/postgres_web3:latest
             georgebott/postgres_web3:alpine
             georgebott/postgres_web3:15-alpine
@@ -58,4 +57,3 @@ jobs:
             ghcr.io/yen/postgres_web3:alpine
             ghcr.io/yen/postgres_web3:15-alpine
             ghcr.io/yen/postgres_web3:15.2-alpine
-          cache-to: type=gha,mode=max
