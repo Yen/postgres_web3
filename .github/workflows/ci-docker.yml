@@ -1,14 +1,18 @@
 name: ci-docker
 
 on:
-  push:
-    branches:
-      - main
+  # our dockerfile is not optimized at all for caching and takes ages
+  # so for now we are going to only dispatch it manually
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
 
 jobs:
   docker:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
       -
         name: Set up QEMU
