@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # build the docker image
 IMAGE=$(docker build -q .)
 # start a detached container

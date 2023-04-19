@@ -153,6 +153,14 @@ RUN set -eux; \
 	\
 	postgres --version
 
+# add the dependencies for postgres_web3
+RUN set -eux; \
+	\
+	apk add --no-cache --virtual .build-deps \
+		libc-dev \
+		clang16 \
+		make;
+		
 # copy the postgres_web3 sources
 RUN mkdir -p /usr/src/postgres_web3
 COPY Makefile postgres_web3--*.sql postgres_web3.control README.postgres_web3 /usr/src/postgres_web3
@@ -161,10 +169,6 @@ COPY src /usr/src/postgres_web3/src
 # make and install postgres_web3
 RUN set -eux; \
 	\
-	apk add --no-cache --virtual .build-deps \
-		libc-dev \
-		clang16 \
-		make; \
 	make -C /usr/src/postgres_web3 -j "$(nproc)"; \
 	make -C /usr/src/postgres_web3 install; \
 	rm -rf /usr/src/postgres_web3; \
