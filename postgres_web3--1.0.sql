@@ -13,6 +13,16 @@ RETURNS cstring
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
+CREATE FUNCTION int128_send(int128)
+RETURNS bytea
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int128_recv(internal)
+RETURNS int128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
 -- int128 operator functions
 
 CREATE FUNCTION int128_add(int128, int128)
@@ -179,6 +189,8 @@ LANGUAGE C IMMUTABLE STRICT;
 CREATE TYPE int128(
     INPUT = int128_in,
     OUTPUT = int128_out,
+    SEND = int128_send,
+    RECEIVE = int128_recv,
     INTERNALLENGTH = 16,
     STORAGE = PLAIN
 );
