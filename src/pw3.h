@@ -4,7 +4,7 @@
 #include "postgres.h"
 #include "fmgr.h"
 
-pg_attribute_always_inline static void pw3_bswap(void *buf, size_t count)
+static void pw3_bswap(void *buf, size_t count)
 {
 #ifdef WORDS_BIGENDIAN
     return;
