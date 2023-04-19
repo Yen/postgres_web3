@@ -362,6 +362,7 @@ CREATE AGGREGATE max(int128) (
 CREATE AGGREGATE avg(int128) (
     SFUNC = int128_avg_accum,
     STYPE = internal,
+    SSPACE = 16,
     COMBINEFUNC = int128_avg_combine,
     FINALFUNC = int128_avg_final
 );
