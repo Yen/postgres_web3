@@ -4,9 +4,25 @@
 #include "postgres.h"
 #include "fmgr.h"
 
-typedef _BitInt(128) pw3_int128;
+pg_attribute_always_inline static void pw3_bswap(void *buf, size_t count)
+{
+#ifdef WORDS_BIGENDIAN
+    return;
+#endif
+    uint8 *array = (uint8 *)buf;
+    for (size_t i = 0; i < count / 2; i++)
+    {
+        size_t j = count - i - 1;
+        uint8 temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
 
-static pw3_int128 *pw3_int128_palloc(pw3_int128 value)
+typedef _BitInt(128) pw3_int128;
+// static_assert(sizeof(pw3_int128) == 16);
+
+pg_attribute_always_inline static pw3_int128 *pw3_int128_palloc(pw3_int128 value)
 {
     pw3_int128 *ptr = palloc(sizeof(pw3_int128));
     *ptr = value;

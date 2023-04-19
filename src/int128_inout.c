@@ -1,4 +1,5 @@
 #include "pw3.h"
+#include "libpq/pqformat.h"
 
 PG_FUNCTION_INFO_V1(int128_in);
 Datum int128_in(PG_FUNCTION_ARGS)
@@ -110,4 +111,31 @@ Datum int128_out(PG_FUNCTION_ARGS)
     char *str = palloc0(sizeof(char) * (str_end - str_begin + 1));
     memcpy(str, str_begin, str_end - str_begin);
     PG_RETURN_CSTRING(str);
+}
+
+PG_FUNCTION_INFO_V1(int128_send);
+Datum int128_send(PG_FUNCTION_ARGS)
+{
+    pw3_int128 *data = PW3_GETARG_INT128_P(0);
+
+    StringInfoData buf;
+    pq_begintypsend(&buf);
+
+    pw3_int128 value = *data;
+    pw3_bswap(&value, sizeof(pw3_int128));
+    pq_sendbytes(&buf, &value, sizeof(pw3_int128));
+
+    PG_RETURN_BYTEA_P(pq_endtypsend(&buf));
+}
+
+PG_FUNCTION_INFO_V1(int128_recv);
+Datum int128_recv(PG_FUNCTION_ARGS)
+{
+    StringInfo buf = (StringInfo)PG_GETARG_POINTER(0);
+
+    pw3_int128 *value = pw3_int128_palloc(0);
+    pq_copymsgbytes(buf, (char *)value, sizeof(pw3_int128));
+    pw3_bswap(value, sizeof(pw3_int128));
+
+    PW3_RETURN_INT128_P(value);
 }
