@@ -74,15 +74,13 @@ Casts in PostgreSQL can by default require an explicit cast operator (`::type`).
 - `sum(type)` -> `type` for `int128`
 - `min(type)` -> `type` for `int128`
 - `max(type)` -> `type` for `int128`
-- `avg(type)` -> `double precision` for `int128`
+- `avg(type)` -> `numeric` for `int128`
 
-_The `avg(type)` family of aggregates are only implemented using a `double precision` return type and as such, are not accurate for larger sums._
+_The `avg(type)` family of aggregates are currently implemented using a `double precision` sum type internally and are not accurate for larger sums. We hope to address this in the future._
 
 # Compiling and installing
 
-postgres_web3 is in a pre-1.0 state and precise building instructions have not been finalized.
-
-**As of April 2023 (time of writing), compiling and installing postgres_web3 is more complicated than we would like due to a number of factors. We highly recommend using one of the pre-built docker container images listed at the top of this document rather than building postgres_web3 from source yourself.**
+**As of April 2023 (time of writing), compiling and installing postgres_web3 is more complicated than we would like due to a number of factors described below. We highly recommend using one of the pre-built [docker container images listed at the top of this document](#docker-container-images) rather than building postgres_web3 from source yourself.**
 
 postgres_web3 uses the PostgreSQL PGXS extension tooling to build, as such, PGXS requires a full install of PostgreSQL to be present.
 
