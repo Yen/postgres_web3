@@ -1,5 +1,8 @@
 #include "pw3.h"
 
+#include "utils/numeric.h"
+#include "utils/builtins.h"
+
 PG_FUNCTION_INFO_V1(int128_min);
 Datum int128_min(PG_FUNCTION_ARGS)
 {
@@ -101,6 +104,7 @@ Datum int128_avg_final(PG_FUNCTION_ARGS)
         PG_RETURN_NULL();
     }
 
-    float8 result = state->sum / state->count;
-    PG_RETURN_FLOAT8(result);
+    float8 float_result = state->sum / state->count;
+    Numeric numeric_result = DatumGetNumeric(DirectFunctionCall1(float8_numeric, Float8GetDatum(float_result)));
+    PG_RETURN_NUMERIC(numeric_result);
 }

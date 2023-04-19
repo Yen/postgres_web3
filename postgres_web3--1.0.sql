@@ -148,7 +148,7 @@ AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE;
 
 CREATE FUNCTION int128_avg_final(internal)
-RETURNS double precision
+RETURNS numeric
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE;
 
