@@ -4,13 +4,15 @@
 #include "postgres.h"
 #include "fmgr.h"
 
+#include <assert.h>
+
 void pw3_bswap(void *buf, size_t count);
 
 void *pw3_agg_context_palloc0(FunctionCallInfo fcinfo, size_t size);
 #define pw3_agg_context_palloc0_object(fcinfo, type) (type *)pw3_agg_context_palloc0(fcinfo, sizeof(type))
 
 typedef _BitInt(128) pw3_int128;
-// static_assert(sizeof(pw3_int128) == 16);
+static_assert(sizeof(pw3_int128) == 16);
 
 pw3_int128 *pw3_int128_palloc(pw3_int128 value);
 
