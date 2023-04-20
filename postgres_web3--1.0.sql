@@ -1,7 +1,7 @@
 -- complain if script is sourced in psql, rather than via CREATE EXTENSION
 \echo Use "CREATE EXTENSION postgres_web3" to load this file. \quit
 
--- int128 inout functions
+-- #region int128 inout functions
 
 CREATE FUNCTION int128_in(cstring)
 RETURNS int128
@@ -23,7 +23,9 @@ RETURNS int128
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
--- int128 operator functions
+-- #endregion
+
+-- #region int128 operator functions
 
 CREATE FUNCTION int128_add(int128, int128)
 RETURNS int128
@@ -125,7 +127,9 @@ RETURNS int128
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
--- int128 aggregate functions
+-- #endregion
+
+-- #region int128 aggregate functions
 
 CREATE FUNCTION int128_min(int128, int128)
 RETURNS int128
@@ -152,7 +156,9 @@ RETURNS numeric
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE;
 
--- int128 cast functions
+-- #endregion
+
+-- #region int128 cast functions
 
 CREATE FUNCTION int128_as_int2(int128)
 RETURNS smallint
@@ -184,7 +190,9 @@ RETURNS int128
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
--- int128
+-- #endregion
+
+-- #region int128
 
 CREATE TYPE int128(
     INPUT = int128_in,
@@ -195,7 +203,9 @@ CREATE TYPE int128(
     STORAGE = PLAIN
 );
 
--- int128 operators
+-- #endregion
+
+-- #region int128 operators
 
 CREATE OPERATOR +(
     LEFTARG = int128,
@@ -326,7 +336,9 @@ CREATE OPERATOR >>(
     FUNCTION = int128_bitshiftright
 );
 
--- int128 casts
+-- #endregion
+
+-- #region int128 casts
 
 CREATE CAST (int128 as smallint) WITH FUNCTION int128_as_int2 AS ASSIGNMENT;
 CREATE CAST (int128 as integer) WITH FUNCTION int128_as_int4 AS ASSIGNMENT;
@@ -336,7 +348,9 @@ CREATE CAST (smallint as int128) WITH FUNCTION int2_as_int128 AS IMPLICIT;
 CREATE CAST (integer as int128) WITH FUNCTION int4_as_int128 AS IMPLICIT;
 CREATE CAST (bigint as int128) WITH FUNCTION int8_as_int128 AS IMPLICIT;
 
--- int128 aggregates
+-- #endregion
+
+-- #region int128 aggregates
 
 CREATE AGGREGATE sum(int128) (
     SFUNC = int128_add,
@@ -366,3 +380,5 @@ CREATE AGGREGATE avg(int128) (
     COMBINEFUNC = int128_avg_combine,
     FINALFUNC = int128_avg_final
 );
+
+-- #endregion
