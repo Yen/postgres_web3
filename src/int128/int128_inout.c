@@ -1,4 +1,4 @@
-#include "pw3.h"
+#include "../pw3.h"
 #include "libpq/pqformat.h"
 
 PG_FUNCTION_INFO_V1(int128_in);

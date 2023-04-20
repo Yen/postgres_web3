@@ -1,4 +1,4 @@
-#include "pw3.h"
+#include "../pw3.h"
 
 #include "utils/numeric.h"
 #include "utils/builtins.h"

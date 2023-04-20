@@ -1,4 +1,4 @@
-#include "pw3.h"
+#include "../pw3.h"
 
 PG_FUNCTION_INFO_V1(int128_as_int2);
 Datum int128_as_int2(PG_FUNCTION_ARGS)
