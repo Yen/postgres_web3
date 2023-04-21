@@ -133,7 +133,7 @@ PG_FUNCTION_INFO_V1(uint128_uminus);
 Datum uint128_uminus(PG_FUNCTION_ARGS)
 {
     pw3_uint128 *value = PW3_GETARG_UINT128_P(0);
-    if (value != 0)
+    if (*value != 0)
     {
         ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("uint128 out of range")));
     }
