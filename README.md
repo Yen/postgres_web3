@@ -33,9 +33,17 @@ In order to address these issues, postgres_web3 adds fixed signed and unsigned i
 - ~~`hex160` A 160 bit hex string (Such as ethereum addresses)~~ (TODO)
 - ~~`hex256` A 256 bit hex string (Such as ethereum block hashes)~~ (TODO)
 
+Integer data types are constructable from a base-10 integer literal (e.g. `'1000'::int128`). For compatibility, unsigned data types can be constructed with negative values but only if the negative integer literal is `-0`.
+
+Hex data types are constructed from a case-insensitive non-prefixed base-16 hex literal following the PostgreSQL `decode(..., 'hex')` behavior (e.g. `0123AbCd::hex160`). Hex literals are interpereted as being zero padded from the beginning of the literal when the full literal is not provided (e.g. `f8f8f8f8f8f8f8f8f8f8::hex160` is equivalent to `00000000000000000000f8f8f8f8f8f8f8f8f8f8::hex160`).
+
+Hex data types are string serialized to a lower case hex string following the PostgreSQL `encode(..., 'hex')` behaviour (e.g. `0123abcd`).
+
 _More data types may be added in the future if they are seen to be prevelant throughout the web3 ecosystem. postgres_web3 is not tied to ethereum and may adopt types that are seen as beneficial to non-ethereum chains._
 
 ## Available operators
+
+_For easier compatibility with existing expressions, operators relating to the sign of numbers (`uplus`, `uminus`, `abs`) are implemented for signed and unsigned types. Where applicable, these may raise "out of range" errors. An example of this is calling `uminus` on a unsigned integer type with a value other than `0`._
 
 - add (`type + type`) -> `type` for `int128`, `uint128`
 - sub (`type - type`) -> `type` for `int128`, `uint128`
@@ -61,6 +69,8 @@ _More data types may be added in the future if they are seen to be prevelant thr
 ## Available casts
 
 Casts in PostgreSQL can by default require an explicit cast operator (`::type`). They can also be fully implicit or only implicit on assignment. [See the PostgreSQL documentation for more info.](https://www.postgresql.org/docs/15/sql-createcast.html)
+
+_We follow the PostgreSQL pattern of only allowing implicit casts for types that will never fail to convert. As such, casting from any signed integer type to any unsigned integer type is not an implicit cast in postgres_web3._
 
 |From          |As `smallint`|As `integer`|As `bigint`|As `int128`|As `uint128`|
 |---           |---          |---         |---        |---        |---         |
