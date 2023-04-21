@@ -28,9 +28,20 @@ void *pw3_agg_context_palloc0(FunctionCallInfo fcinfo, size_t size)
     return result;
 }
 
+// pw3_int128
+
 pw3_int128 *pw3_int128_palloc(pw3_int128 value)
 {
     pw3_int128 *ptr = palloc_object(pw3_int128);
+    *ptr = value;
+    return ptr;
+}
+
+// pw3_uint128
+
+pw3_uint128 *pw3_uint128_palloc(pw3_uint128 value)
+{
+    pw3_uint128 *ptr = palloc_object(pw3_uint128);
     *ptr = value;
     return ptr;
 }

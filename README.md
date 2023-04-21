@@ -27,54 +27,55 @@ In order to address these issues, postgres_web3 adds fixed signed and unsigned i
 # Data types
 
 - `int128` A signed 128 bit integer
+- `uint128` A unsigned 128 bit integer
 - ~~`int256` A signed 256 bit integer~~ (TODO)
-- ~~`uint128` A unsigned 128 bit integer~~ (TODO)
 - ~~`uint256` A unsigned 256 bit integer~~ (TODO)
-- ~~`hex256` A 256 bit hex string (Such as ethereum block hashes)~~ (TODO)
 - ~~`hex160` A 160 bit hex string (Such as ethereum addresses)~~ (TODO)
+- ~~`hex256` A 256 bit hex string (Such as ethereum block hashes)~~ (TODO)
 
 _More data types may be added in the future if they are seen to be prevelant throughout the web3 ecosystem. postgres_web3 is not tied to ethereum and may adopt types that are seen as beneficial to non-ethereum chains._
 
 ## Available operators
 
-- add (`type + type`) -> `type` for `int128`
-- sub (`type - type`) -> `type` for `int128`
-- mul (`type * type`) -> `type` for `int128`
-- div (`type / type`) -> `type` for `int128`
-- mod (`type % type`) -> `type` for `int128`
-- lt (`type < type`) -> `boolean` for `int128`
-- gt (`type > type`) -> `boolean` for `int128`
-- lteq (`type <= type`) -> `boolean` for `int128`
-- gteq (`type >= type`) -> `boolean` for `int128`
-- eq (`type = type`) -> `boolean` for `int128`
-- neq (`type <> type`) -> `boolean` for `int128`
-- uplus (`+type`) -> `type` for `int128`
-- uminus (`-type`) -> `type` for `int128`
-- abs (`@type`) -> `type` for `int128`
-- bitand (`type & type`) -> `type` for `int128`
-- bitor (`type | type`) -> `type` for `int128`
-- bitxor (`type # type`) -> `type` for `int128`
-- bitnot (`~type`) -> `type` for `int128`
-- bitshiftleft (`type << integer`) -> `type` for `int128`
-- bitshiftright (`type >> integer`) -> `type` for `int128`
+- add (`type + type`) -> `type` for `int128`, `uint128`
+- sub (`type - type`) -> `type` for `int128`, `uint128`
+- mul (`type * type`) -> `type` for `int128`, `uint128`
+- div (`type / type`) -> `type` for `int128`, `uint128`
+- mod (`type % type`) -> `type` for `int128`, `uint128`
+- lt (`type < type`) -> `boolean` for `int128`, `uint128`
+- gt (`type > type`) -> `boolean` for `int128`, `uint128`
+- lteq (`type <= type`) -> `boolean` for `int128`, `uint128`
+- gteq (`type >= type`) -> `boolean` for `int128`, `uint128`
+- eq (`type = type`) -> `boolean` for `int128`, `uint128`
+- neq (`type <> type`) -> `boolean` for `int128`, `uint128`
+- uplus (`+type`) -> `type` for `int128`, `uint128`
+- uminus (`-type`) -> `type` for `int128`, `uint128`
+- abs (`@type`) -> `type` for `int128`, `uint128`
+- bitand (`type & type`) -> `type` for `int128`, `uint128`
+- bitor (`type | type`) -> `type` for `int128`, `uint128`
+- bitxor (`type # type`) -> `type` for `int128`, `uint128`
+- bitnot (`~type`) -> `type` for `int128`, `uint128`
+- bitshiftleft (`type << integer`) -> `type` for `int128`, `uint128`
+- bitshiftright (`type >> integer`) -> `type` for `int128`, `uint128`
 
 ## Available casts
 
 Casts in PostgreSQL can by default require an explicit cast operator (`::type`). They can also be fully implicit or only implicit on assignment. [See the PostgreSQL documentation for more info.](https://www.postgresql.org/docs/15/sql-createcast.html)
 
-|From          |As `smallint`|As `integer`|As `bigint`|As `int128`|
-|---           |---          |---         |---        |---        |
-|**`smallint`**|             |implicit    |implicit   |implicit   |
-|**`integer`** |assignment   |            |implicit   |implicit   |
-|**`bigint`**  |assignment   |assignment  |           |implicit   |
-|**`int128`**  |assignment   |assignment  |assignment |           |
+|From          |As `smallint`|As `integer`|As `bigint`|As `int128`|As `uint128`|
+|---           |---          |---         |---        |---        |---         |
+|**`smallint`**|             |implicit    |implicit   |implicit   |assignment  |
+|**`integer`** |assignment   |            |implicit   |implicit   |assignment  |
+|**`bigint`**  |assignment   |assignment  |           |implicit   |assignment  |
+|**`int128`**  |assignment   |assignment  |assignment |           |assignment  |
+|**`uint128`** |assignment   |assignment  |assignment |assignment |            |
 
 ## Available aggregates
 
-- `sum(type)` -> `type` for `int128`
-- `min(type)` -> `type` for `int128`
-- `max(type)` -> `type` for `int128`
-- `avg(type)` -> `numeric` for `int128`
+- `sum(type)` -> `type` for `int128`, `uint128`
+- `min(type)` -> `type` for `int128`, `uint128`
+- `max(type)` -> `type` for `int128`, `uint128`
+- `avg(type)` -> `numeric` for `int128`, `uint128`
 
 _The `avg(type)` family of aggregates are currently implemented using a `double precision` sum type internally and are not accurate for larger sums. We hope to address this in the future._
 
