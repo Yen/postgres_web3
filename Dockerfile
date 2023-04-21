@@ -161,19 +161,6 @@ RUN set -eux; \
 		clang16 \
 		make;
 		
-# copy the postgres_web3 sources
-RUN mkdir -p /usr/src/postgres_web3
-COPY Makefile postgres_web3--*.sql postgres_web3.control README.postgres_web3 /usr/src/postgres_web3
-COPY src /usr/src/postgres_web3/src
-
-# make and install postgres_web3
-RUN set -eux; \
-	\
-	make -C /usr/src/postgres_web3 -j "$(nproc)"; \
-	make -C /usr/src/postgres_web3 install; \
-	rm -rf /usr/src/postgres_web3; \
-	apk del --no-network .build-deps
-
 # make the sample config easier to munge (and "correct by default")
 RUN set -eux; \
 	cp -v /usr/local/share/postgresql/postgresql.conf.sample /usr/local/share/postgresql/postgresql.conf.sample.orig; \
@@ -186,6 +173,31 @@ ENV PGDATA /var/lib/postgresql/data
 # this 777 will be replaced by 700 at runtime (allows semi-arbitrary "--user" values)
 RUN mkdir -p "$PGDATA" && chown -R postgres:postgres "$PGDATA" && chmod 1777 "$PGDATA"
 VOLUME /var/lib/postgresql/data
+
+# copy the postgres_web3 sources
+RUN mkdir -p /usr/src/postgres_web3
+COPY Makefile postgres_web3--*.sql postgres_web3.control README.postgres_web3 /usr/src/postgres_web3
+COPY src /usr/src/postgres_web3/src
+COPY sql /usr/src/postgres_web3/sql
+COPY expected /usr/src/postgres_web3/expected
+
+# make and install postgres_web3
+RUN set -eux; \
+	\
+# build postgres_web3
+	make -C /usr/src/postgres_web3 -j "$(nproc)"; \
+	make -C /usr/src/postgres_web3 install; \
+# regression check
+	mkdir /tempdb; \
+    chown -R postgres:postgres /tempdb; \
+    su postgres -c 'pg_ctl -D /tempdb init'; \
+    su postgres -c 'pg_ctl -D /tempdb start'; \
+    make -C /usr/src/postgres_web3 installcheck PGUSER=postgres; \
+    su postgres -c 'pg_ctl -D /tempdb --mode=immediate stop'; \
+    rm -rf /tempdb; \
+# clean up postgres_web3
+	rm -rf /usr/src/postgres_web3; \
+	apk del --no-network .build-deps
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]

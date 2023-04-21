@@ -1,0 +1,294 @@
+-- TEST -- in function (success)
+SELECT '0'::int128;
+ int128 
+--------
+ 0
+(1 row)
+
+-- TEST -- in function min (success)
+SELECT '-170141183460469231731687303715884105728'::int128;
+                  int128                  
+------------------------------------------
+ -170141183460469231731687303715884105728
+(1 row)
+
+-- TEST -- in function max (success)
+SELECT '170141183460469231731687303715884105727'::int128;
+                 int128                  
+-----------------------------------------
+ 170141183460469231731687303715884105727
+(1 row)
+
+-- TEST -- in function min - 1 (failure)
+SELECT '-170141183460469231731687303715884105729'::int128;
+ERROR:  value "-170141183460469231731687303715884105729" is out of range for type int128
+LINE 1: SELECT '-170141183460469231731687303715884105729'::int128;
+               ^
+-- TEST -- in function max + 1 (failure)
+SELECT '170141183460469231731687303715884105728'::int128;
+ERROR:  value "170141183460469231731687303715884105728" is out of range for type int128
+LINE 1: SELECT '170141183460469231731687303715884105728'::int128;
+               ^
+-- min variable
+\set int128_min '\'-170141183460469231731687303715884105728\'::int128'
+-- max variable
+\set int128_max '\'170141183460469231731687303715884105727\'::int128'
+-- TEST -- operator add (success)
+SELECT 5::int128 + 2::int128;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator add (failure)
+SELECT :int128_max + 1::int128;
+ERROR:  int128 out of range
+-- TEST -- operator sub (success)
+SELECT 5::int128 - 2::int128;
+ ?column? 
+----------
+ 3
+(1 row)
+
+-- TEST -- operator sub (failure)
+SELECT :int128_min - 1::int128;
+ERROR:  int128 out of range
+-- TEST -- operator mul (success)
+SELECT 5::int128 * 2::int128;
+ ?column? 
+----------
+ 10
+(1 row)
+
+-- TEST -- operator mul (failure)
+SELECT :int128_max * 2::int128;
+ERROR:  int128 out of range
+-- TEST -- operator div (success)
+SELECT 5::int128 / 2::int128;
+ ?column? 
+----------
+ 2
+(1 row)
+
+-- TEST -- operator div (failure)
+SELECT 5::int128 / 0::int128;
+ERROR:  division by zero
+-- TEST -- operator div (failure)
+SELECT :int128_min / -1::int128;
+ERROR:  int128 out of range
+-- TEST -- operator mod (success)
+SELECT 5::int128 % 2::int128;
+ ?column? 
+----------
+ 1
+(1 row)
+
+-- TEST -- operator mod (failure)
+SELECT 5::int128 % 0::int128;
+ERROR:  division by zero
+-- TEST -- operator lt (success)
+SELECT 5::int128 < 2::int128;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lt (success)
+SELECT 5::int128 < 5::int128;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator gt (success)
+SELECT 5::int128 > 2::int128;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gt (success)
+SELECT 5::int128 > 5::int128;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lteq (success)
+SELECT 5::int128 <= 2::int128;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lteq (success)
+SELECT 5::int128 <= 5::int128;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gteq (success)
+SELECT 5::int128 >= 2::int128;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gteq (success)
+SELECT 5::int128 >= 5::int128;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator eq (success)
+SELECT 5::int128 = 2::int128;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator eq (success)
+SELECT 5::int128 = 5::int128;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator neq (success)
+SELECT 5::int128 <> 2::int128;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator neq (success)
+SELECT 5::int128 <> 5::int128;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator uplus (success)
+SELECT +(5::int128);
+ ?column? 
+----------
+ 5
+(1 row)
+
+-- TEST -- operator uminus (success)
+SELECT -(5::int128);
+ ?column? 
+----------
+ -5
+(1 row)
+
+-- TEST -- operator abs (success)
+SELECT @(5::int128);
+ ?column? 
+----------
+ 5
+(1 row)
+
+-- TEST -- operator abs (success)
+SELECT @(-5::int128);
+ ?column? 
+----------
+ 5
+(1 row)
+
+-- TEST -- operator abs (failure)
+SELECT @(:int128_min);
+ERROR:  int128 out of range
+-- TEST -- operator bitand (success)
+SELECT 5::int128 & 2::int128;
+ ?column? 
+----------
+ 0
+(1 row)
+
+-- TEST -- operator bitor (success)
+SELECT 5::int128 | 2::int128;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator bitxor (success)
+SELECT 5::int128 # 2::int128;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator bitnot (success)
+SELECT ~(2::int128);
+ ?column? 
+----------
+ -3
+(1 row)
+
+-- TEST -- operator bitshiftleft (success)
+SELECT 5::int128 << 2;
+ ?column? 
+----------
+ 20
+(1 row)
+
+-- TEST -- operator bitshiftright (success)
+SELECT 5::int128 >> 2;
+ ?column? 
+----------
+ 1
+(1 row)
+
+-- TEST -- cast int128 as smallint (success)
+SELECT 5::int128::smallint;
+ int2 
+------
+    5
+(1 row)
+
+-- TEST -- cast int128 as smallint (failure)
+SELECT :int128_max::smallint;
+ERROR:  smallint out of range
+-- TEST -- cast int128 as smallint (failure)
+SELECT :int128_min::smallint;
+ERROR:  smallint out of range
+-- TEST -- cast int128 as integer (success)
+SELECT 5::int128::integer;
+ int4 
+------
+    5
+(1 row)
+
+-- TEST -- cast int128 as integer (failure)
+SELECT :int128_max::integer;
+ERROR:  integer out of range
+-- TEST -- cast int128 as integer (failure)
+SELECT :int128_min::integer;
+ERROR:  integer out of range
+-- TEST -- cast int128 as bigint (success)
+SELECT 5::int128::bigint;
+ int8 
+------
+    5
+(1 row)
+
+-- TEST -- cast int128 as bigint (failure)
+SELECT :int128_max::bigint;
+ERROR:  bigint out of range
+-- TEST -- cast int128 as bigint (failure)
+SELECT :int128_min::bigint;
+ERROR:  bigint out of range
+-- TEST -- cast int128 as uint128 (success)
+SELECT 5::int128::uint128;
+ uint128 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast int128 as uint128 (failure)
+SELECT -5::int128::uint128;
+ERROR:  uint128 out of range
