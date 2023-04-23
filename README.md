@@ -13,7 +13,9 @@ A PostgreSQL extension implementing a collection of optimized data types for web
 
 ## Docker container images
 
-Container images are available for ~~`linux/386`~~, `linux/amd64`, and ~~`linux/arm64`~~. The postgres_web3 image may build on other platforms.
+Container images are available for `linux/amd64`. The postgres_web3 image may build on other platforms.
+
+_Currently only a modified version of the alpine linux postgres image is available and should support all functionality and features of the official postgres image. We hope to support a version of every tag supported by the dockerhub official postgres image, but at this time, building postgres with postgres_web3 makes this difficult to achieve. See the [compiling and installing](#compiling-and-installing) section for details._
 
 - [Docker Hub](https://hub.docker.com/r/georgebott/postgres_web3)
 - [Github Container Registry](https://ghcr.io/yen/postgres_web3)
@@ -33,11 +35,13 @@ In order to address these issues, postgres_web3 adds fixed signed and unsigned i
 - ~~`hex160` A 160 bit hex string (Such as ethereum addresses)~~ (TODO)
 - ~~`hex256` A 256 bit hex string (Such as ethereum block hashes)~~ (TODO)
 
-Integer data types are constructable from a base-10 integer literal (e.g. `'1000'::int128`). For compatibility, unsigned data types can be constructed with negative values but only if the negative integer literal is `-0`.
+Integer data types are constructable from a base-10 integer string (e.g. `'1000'::int128`). For compatibility, unsigned data types can be constructed with negative values but only if the negative integer string is `'-0'`.
 
-Hex data types are constructed from a case-insensitive non-prefixed base-16 hex literal following the PostgreSQL `decode(..., 'hex')` behavior (e.g. `0123AbCd::hex160`). Hex literals are interpereted as being zero padded from the beginning of the literal when the full literal is not provided (e.g. `f8f8f8f8f8f8f8f8f8f8::hex160` is equivalent to `00000000000000000000f8f8f8f8f8f8f8f8f8f8::hex160`).
+Hex data types are constructed from a case-insensitive non-prefixed base-16 hex string following the PostgreSQL `decode(..., 'hex')` behavior (e.g. `'0123AbCd'::hex160`). Hex string are interpereted as being zero padded from the beginning of the string when the full string is not provided (e.g. `'f8f8f8f8f8f8f8f8f8f8'::hex160` is equivalent to `'00000000000000000000f8f8f8f8f8f8f8f8f8f8'::hex160`).
 
-Hex data types are string serialized to a lower case hex string following the PostgreSQL `encode(..., 'hex')` behaviour (e.g. `0123abcd`).
+Hex data types are string serialized to a lower case hex string following the PostgreSQL `encode(..., 'hex')` behaviour (e.g. `'0123abcd'`).
+
+Hex data types do not preserve the case of input strings (e.g. `'FF'::hex160` is equivalent to `'ff'::hex160` for all operations, and vice versa).
 
 _More data types may be added in the future if they are seen to be prevelant throughout the web3 ecosystem. postgres_web3 is not tied to ethereum and may adopt types that are seen as beneficial to non-ethereum chains._
 
