@@ -79,8 +79,8 @@ Datum uint128_out(PG_FUNCTION_ARGS)
 {
     pw3_uint128 *data = PW3_GETARG_UINT128_P(0);
 
-    char str_buf[64];
-    char *str_end = str_buf + 64;
+    char str_buf[PW3_UINT128_STRLEN_MAX];
+    char *str_end = str_buf + PW3_UINT128_STRLEN_MAX;
     char *str_begin = str_end;
 
     pw3_uint128 rem = *data;
