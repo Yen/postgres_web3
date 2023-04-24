@@ -45,3 +45,71 @@ pw3_uint128 *pw3_uint128_palloc(pw3_uint128 value)
     *ptr = value;
     return ptr;
 }
+
+// pw3_int256
+
+pw3_int256 *pw3_int256_palloc(pw3_int256 value)
+{
+    pw3_int256 *ptr = palloc_object(pw3_int256);
+    *ptr = value;
+    return ptr;
+}
+
+bool pw3_int256_add_overflow(pw3_int256 a, pw3_int256 b, pw3_int256 *res)
+{
+    if (b > 0 && a > PW3_INT256_MAX - b)
+    {
+        return true;
+    }
+    if (b < 0 && a < PW3_INT256_MIN - b)
+    {
+        return true;
+    }
+    *res = a + b;
+    return false;
+}
+
+bool pw3_int256_sub_overflow(pw3_int256 a, pw3_int256 b, pw3_int256 *res)
+{
+    if (b < 0 && a > PW3_INT256_MAX + b)
+    {
+        return true;
+    }
+    if (b > 0 && a < PW3_INT256_MIN + b)
+    {
+        return true;
+    }
+    *res = a - b;
+    return false;
+}
+
+bool pw3_int256_mul_overflow(pw3_int256 a, pw3_int256 b, pw3_int256 *res)
+{
+    if (b == -1 && a == PW3_INT256_MIN)
+    {
+        return true;
+    }
+    if (a == -1 && b == PW3_INT256_MIN)
+    {
+        return true;
+    }
+    if (b != 0 && a > PW3_INT256_MAX / b)
+    {
+        return true;
+    }
+    if (b != 0 && a < PW3_INT256_MIN / b)
+    {
+        return true;
+    }
+    *res = a * b;
+    return false;
+}
+
+// pw3_uint256
+
+pw3_uint256 *pw3_uint256_palloc(pw3_uint256 value)
+{
+    pw3_uint256 *ptr = palloc_object(pw3_uint256);
+    *ptr = value;
+    return ptr;
+}

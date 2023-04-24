@@ -29,7 +29,7 @@ typedef struct pw3_uint128_avg_state
     float8 sum;
     int64 count;
 } pw3_uint128_avg_state;
-static_assert(sizeof(pw3_uint128_avg_state) == 16);
+static_assert(sizeof(pw3_uint128_avg_state) == 16, "expected pw3_uint128_avg_state to be 16 bytes");
 
 #define PW3_GETARG_UINT128_AVG_STATE_P(n) ((pw3_uint128_avg_state *)PG_GETARG_DATUM(n))
 #define PW3_RETURN_UINT128_AVG_STATE_P(x) return ((Datum)(x))

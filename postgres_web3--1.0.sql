@@ -49,6 +49,54 @@ LANGUAGE C IMMUTABLE STRICT;
 
 -- #endregion
 
+-- #region int256 inout functions
+
+CREATE FUNCTION int256_in(cstring)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_out(int256)
+RETURNS cstring
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_send(int256)
+RETURNS bytea
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_recv(internal)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
+-- #region uint256 inout functions
+
+CREATE FUNCTION uint256_in(cstring)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_out(uint256)
+RETURNS cstring
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_send(uint256)
+RETURNS bytea
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_recv(internal)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
 -- #region int128 operator functions
 
 CREATE FUNCTION int128_add(int128, int128)
@@ -257,6 +305,214 @@ LANGUAGE C IMMUTABLE STRICT;
 
 -- #endregion
 
+-- #region int256 operator functions
+
+CREATE FUNCTION int256_add(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_sub(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_mul(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_div(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_mod(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_lt(int256, int256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_gt(int256, int256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_lteq(int256, int256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_gteq(int256, int256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_eq(int256, int256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_neq(int256, int256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_uplus(int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_uminus(int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_abs(int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_bitand(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_bitor(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_bitxor(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_bitnot(int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_bitshiftleft(int256, integer)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_bitshiftright(int256, integer)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
+-- #region uint256 operator functions
+
+CREATE FUNCTION uint256_add(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_sub(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_mul(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_div(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_mod(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_lt(uint256, uint256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_gt(uint256, uint256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_lteq(uint256, uint256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_gteq(uint256, uint256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_eq(uint256, uint256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_neq(uint256, uint256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_uplus(uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_uminus(uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_abs(uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_bitand(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_bitor(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_bitxor(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_bitnot(uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_bitshiftleft(uint256, integer)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_bitshiftright(uint256, integer)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
 -- #region int128 aggregate functions
 
 CREATE FUNCTION int128_min(int128, int128)
@@ -315,6 +571,64 @@ LANGUAGE C IMMUTABLE;
 
 -- #endregion
 
+-- #region int256 aggregate functions
+
+CREATE FUNCTION int256_min(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_max(int256, int256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_avg_accum(internal, int256)
+RETURNS internal
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE;
+
+CREATE FUNCTION int256_avg_combine(internal, internal)
+RETURNS internal
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE;
+
+CREATE FUNCTION int256_avg_final(internal)
+RETURNS numeric
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE;
+
+-- #endregion
+
+-- #region uint256 aggregate functions
+
+CREATE FUNCTION uint256_min(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_max(uint256, uint256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_avg_accum(internal, uint256)
+RETURNS internal
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE;
+
+CREATE FUNCTION uint256_avg_combine(internal, internal)
+RETURNS internal
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE;
+
+CREATE FUNCTION uint256_avg_final(internal)
+RETURNS numeric
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE;
+
+-- #endregion
+
 -- #region int128 cast functions
 
 CREATE FUNCTION int128_as_int2(int128)
@@ -334,6 +648,16 @@ LANGUAGE C IMMUTABLE STRICT;
 
 CREATE FUNCTION int128_as_uint128(int128)
 RETURNS uint128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int128_as_int256(int128)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int128_as_uint256(int128)
+RETURNS uint256
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
@@ -376,6 +700,16 @@ RETURNS int128
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
+CREATE FUNCTION uint128_as_int256(uint128)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint128_as_uint256(uint128)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
 CREATE FUNCTION int2_as_uint128(smallint)
 RETURNS uint128
 AS '$libdir/postgres_web3'
@@ -388,6 +722,104 @@ LANGUAGE C IMMUTABLE STRICT;
 
 CREATE FUNCTION int8_as_uint128(bigint)
 RETURNS uint128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
+-- #region int256 cast functions
+
+CREATE FUNCTION int256_as_int2(int256)
+RETURNS smallint
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_as_int4(int256)
+RETURNS integer
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_as_int8(int256)
+RETURNS bigint
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_as_int128(int256)
+RETURNS int128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_as_uint128(int256)
+RETURNS uint128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_as_uint256(int256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int2_as_int256(smallint)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int4_as_int256(integer)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int8_as_int256(bigint)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
+-- #region uint256 cast functions
+
+CREATE FUNCTION uint256_as_int2(uint256)
+RETURNS smallint
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_as_int4(uint256)
+RETURNS integer
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_as_int8(uint256)
+RETURNS bigint
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_as_int128(uint256)
+RETURNS int128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_as_uint128(uint256)
+RETURNS uint128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_as_int256(uint256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int2_as_uint256(smallint)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int4_as_uint256(integer)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int8_as_uint256(bigint)
+RETURNS uint256
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
@@ -414,6 +846,32 @@ CREATE TYPE uint128(
     SEND = uint128_send,
     RECEIVE = uint128_recv,
     INTERNALLENGTH = 16,
+    STORAGE = PLAIN
+);
+
+-- #endregion
+
+-- #region int256
+
+CREATE TYPE int256(
+    INPUT = int256_in,
+    OUTPUT = int256_out,
+    SEND = int256_send,
+    RECEIVE = int256_recv,
+    INTERNALLENGTH = 32,
+    STORAGE = PLAIN
+);
+
+-- #endregion
+
+-- #region uint256
+
+CREATE TYPE uint256(
+    INPUT = uint256_in,
+    OUTPUT = uint256_out,
+    SEND = uint256_send,
+    RECEIVE = uint256_recv,
+    INTERNALLENGTH = 32,
     STORAGE = PLAIN
 );
 
@@ -685,12 +1143,280 @@ CREATE OPERATOR >>(
 
 -- #endregion
 
+-- #region int256 operators
+
+CREATE OPERATOR +(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_add,
+    COMMUTATOR = +
+);
+
+CREATE OPERATOR -(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_sub
+);
+
+CREATE OPERATOR *(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_mul,
+    COMMUTATOR = *
+);
+
+CREATE OPERATOR /(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_div
+);
+
+CREATE OPERATOR %(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_mod
+);
+
+CREATE OPERATOR <(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_lt,
+    NEGATOR = >=
+);
+
+CREATE OPERATOR >(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_gt,
+    NEGATOR = <=
+);
+
+CREATE OPERATOR <=(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_lteq,
+    NEGATOR = >
+);
+
+CREATE OPERATOR >=(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_gteq,
+    NEGATOR = <
+);
+
+CREATE OPERATOR =(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_eq,
+    COMMUTATOR = =,
+    NEGATOR = <>
+);
+
+CREATE OPERATOR <>(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_neq,
+    COMMUTATOR = <>,
+    NEGATOR = =
+);
+
+CREATE OPERATOR +(
+    RIGHTARG = int256,
+    FUNCTION = int256_uplus
+);
+
+CREATE OPERATOR -(
+    RIGHTARG = int256,
+    FUNCTION = int256_uminus
+);
+
+CREATE OPERATOR @(
+    RIGHTARG = int256,
+    FUNCTION = int256_abs
+);
+
+CREATE OPERATOR &(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_bitand,
+    COMMUTATOR = &
+);
+
+CREATE OPERATOR |(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_bitor,
+    COMMUTATOR = |
+);
+
+CREATE OPERATOR #(
+    LEFTARG = int256,
+    RIGHTARG = int256,
+    FUNCTION = int256_bitxor,
+    COMMUTATOR = #
+);
+
+CREATE OPERATOR ~(
+    RIGHTARG = int256,
+    FUNCTION = int256_bitnot
+);
+
+CREATE OPERATOR <<(
+    LEFTARG = int256,
+    RIGHTARG = integer,
+    FUNCTION = int256_bitshiftleft
+);
+
+CREATE OPERATOR >>(
+    LEFTARG = int256,
+    RIGHTARG = integer,
+    FUNCTION = int256_bitshiftright
+);
+
+-- #endregion
+
+-- #region uint256 operators
+
+CREATE OPERATOR +(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_add,
+    COMMUTATOR = +
+);
+
+CREATE OPERATOR -(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_sub
+);
+
+CREATE OPERATOR *(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_mul,
+    COMMUTATOR = *
+);
+
+CREATE OPERATOR /(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_div
+);
+
+CREATE OPERATOR %(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_mod
+);
+
+CREATE OPERATOR <(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_lt,
+    NEGATOR = >=
+);
+
+CREATE OPERATOR >(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_gt,
+    NEGATOR = <=
+);
+
+CREATE OPERATOR <=(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_lteq,
+    NEGATOR = >
+);
+
+CREATE OPERATOR >=(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_gteq,
+    NEGATOR = <
+);
+
+CREATE OPERATOR =(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_eq,
+    COMMUTATOR = =,
+    NEGATOR = <>
+);
+
+CREATE OPERATOR <>(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_neq,
+    COMMUTATOR = <>,
+    NEGATOR = =
+);
+
+CREATE OPERATOR +(
+    RIGHTARG = uint256,
+    FUNCTION = uint256_uplus
+);
+
+CREATE OPERATOR -(
+    RIGHTARG = uint256,
+    FUNCTION = uint256_uminus
+);
+
+CREATE OPERATOR @(
+    RIGHTARG = uint256,
+    FUNCTION = uint256_abs
+);
+
+CREATE OPERATOR &(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_bitand,
+    COMMUTATOR = &
+);
+
+CREATE OPERATOR |(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_bitor,
+    COMMUTATOR = |
+);
+
+CREATE OPERATOR #(
+    LEFTARG = uint256,
+    RIGHTARG = uint256,
+    FUNCTION = uint256_bitxor,
+    COMMUTATOR = #
+);
+
+CREATE OPERATOR ~(
+    RIGHTARG = uint256,
+    FUNCTION = uint256_bitnot
+);
+
+CREATE OPERATOR <<(
+    LEFTARG = uint256,
+    RIGHTARG = integer,
+    FUNCTION = uint256_bitshiftleft
+);
+
+CREATE OPERATOR >>(
+    LEFTARG = uint256,
+    RIGHTARG = integer,
+    FUNCTION = uint256_bitshiftright
+);
+
+-- #endregion
+
 -- #region int128 casts
 
 CREATE CAST (int128 as smallint) WITH FUNCTION int128_as_int2 AS ASSIGNMENT;
 CREATE CAST (int128 as integer) WITH FUNCTION int128_as_int4 AS ASSIGNMENT;
 CREATE CAST (int128 as bigint) WITH FUNCTION int128_as_int8 AS ASSIGNMENT;
 CREATE CAST (int128 as uint128) WITH FUNCTION int128_as_uint128 AS ASSIGNMENT;
+CREATE CAST (int128 as int256) WITH FUNCTION int128_as_int256 AS IMPLICIT;
+CREATE CAST (int128 as uint256) WITH FUNCTION int128_as_uint256 AS ASSIGNMENT;
 
 CREATE CAST (smallint as int128) WITH FUNCTION int2_as_int128 AS IMPLICIT;
 CREATE CAST (integer as int128) WITH FUNCTION int4_as_int128 AS IMPLICIT;
@@ -704,10 +1430,42 @@ CREATE CAST (uint128 as smallint) WITH FUNCTION uint128_as_int2 AS ASSIGNMENT;
 CREATE CAST (uint128 as integer) WITH FUNCTION uint128_as_int4 AS ASSIGNMENT;
 CREATE CAST (uint128 as bigint) WITH FUNCTION uint128_as_int8 AS ASSIGNMENT;
 CREATE CAST (uint128 as int128) WITH FUNCTION uint128_as_int128 AS ASSIGNMENT;
+CREATE CAST (uint128 as int256) WITH FUNCTION uint128_as_int256 AS ASSIGNMENT;
+CREATE CAST (uint128 as uint256) WITH FUNCTION uint128_as_uint256 AS IMPLICIT;
 
 CREATE CAST (smallint as uint128) WITH FUNCTION int2_as_uint128 AS ASSIGNMENT;
 CREATE CAST (integer as uint128) WITH FUNCTION int4_as_uint128 AS ASSIGNMENT;
 CREATE CAST (bigint as uint128) WITH FUNCTION int8_as_uint128 AS ASSIGNMENT;
+
+-- #endregion
+
+-- #region int256 casts
+
+CREATE CAST (int256 as smallint) WITH FUNCTION int256_as_int2 AS ASSIGNMENT;
+CREATE CAST (int256 as integer) WITH FUNCTION int256_as_int4 AS ASSIGNMENT;
+CREATE CAST (int256 as bigint) WITH FUNCTION int256_as_int8 AS ASSIGNMENT;
+CREATE CAST (int256 as int128) WITH FUNCTION int256_as_int128 AS ASSIGNMENT;
+CREATE CAST (int256 as uint128) WITH FUNCTION int256_as_uint128 AS ASSIGNMENT;
+CREATE CAST (int256 as uint256) WITH FUNCTION int256_as_uint256 AS ASSIGNMENT;
+
+CREATE CAST (smallint as int256) WITH FUNCTION int2_as_int256 AS IMPLICIT;
+CREATE CAST (integer as int256) WITH FUNCTION int4_as_int256 AS IMPLICIT;
+CREATE CAST (bigint as int256) WITH FUNCTION int8_as_int256 AS IMPLICIT;
+
+-- #endregion
+
+-- #region uint256 casts
+
+CREATE CAST (uint256 as smallint) WITH FUNCTION uint256_as_int2 AS ASSIGNMENT;
+CREATE CAST (uint256 as integer) WITH FUNCTION uint256_as_int4 AS ASSIGNMENT;
+CREATE CAST (uint256 as bigint) WITH FUNCTION uint256_as_int8 AS ASSIGNMENT;
+CREATE CAST (uint256 as int128) WITH FUNCTION uint256_as_int128 AS ASSIGNMENT;
+CREATE CAST (uint256 as uint128) WITH FUNCTION uint256_as_uint128 AS ASSIGNMENT;
+CREATE CAST (uint256 as int256) WITH FUNCTION uint256_as_int256 AS ASSIGNMENT;
+
+CREATE CAST (smallint as uint256) WITH FUNCTION int2_as_uint256 AS ASSIGNMENT;
+CREATE CAST (integer as uint256) WITH FUNCTION int4_as_uint256 AS ASSIGNMENT;
+CREATE CAST (bigint as uint256) WITH FUNCTION int8_as_uint256 AS ASSIGNMENT;
 
 -- #endregion
 
@@ -773,6 +1531,72 @@ CREATE AGGREGATE avg(uint128) (
     SSPACE = 16,
     COMBINEFUNC = uint128_avg_combine,
     FINALFUNC = uint128_avg_final
+);
+
+-- #endregion
+
+-- #region int256 aggregates
+
+CREATE AGGREGATE sum(int256) (
+    SFUNC = int256_add,
+    STYPE = int256,
+    COMBINEFUNC = int256_add,
+    initcond = '0'
+);
+
+CREATE AGGREGATE min(int256) (
+    SFUNC = int256_min,
+    STYPE = int256,
+    SORTOP = <,
+    COMBINEFUNC = int256_min
+);
+
+CREATE AGGREGATE max(int256) (
+    SFUNC = int256_max,
+    STYPE = int256,
+    SORTOP = >,
+    COMBINEFUNC = int256_max
+);
+
+CREATE AGGREGATE avg(int256) (
+    SFUNC = int256_avg_accum,
+    STYPE = internal,
+    SSPACE = 16,
+    COMBINEFUNC = int256_avg_combine,
+    FINALFUNC = int256_avg_final
+);
+
+-- #endregion
+
+-- #region uint256 aggregates
+
+CREATE AGGREGATE sum(uint256) (
+    SFUNC = uint256_add,
+    STYPE = uint256,
+    COMBINEFUNC = uint256_add,
+    initcond = '0'
+);
+
+CREATE AGGREGATE min(uint256) (
+    SFUNC = uint256_min,
+    STYPE = uint256,
+    SORTOP = <,
+    COMBINEFUNC = uint256_min
+);
+
+CREATE AGGREGATE max(uint256) (
+    SFUNC = uint256_max,
+    STYPE = uint256,
+    SORTOP = >,
+    COMBINEFUNC = uint256_max
+);
+
+CREATE AGGREGATE avg(uint256) (
+    SFUNC = uint256_avg_accum,
+    STYPE = internal,
+    SSPACE = 16,
+    COMBINEFUNC = uint256_avg_combine,
+    FINALFUNC = uint256_avg_final
 );
 
 -- #endregion

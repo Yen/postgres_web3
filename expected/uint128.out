@@ -34,207 +34,207 @@ LINE 1: SELECT '340282366920938463463374607431768211456'::uint128;
 -- max variable
 \set uint128_max '\'340282366920938463463374607431768211455\'::uint128'
 -- TEST -- operator add (success)
-SELECT 5::uint128 + 2::uint128;
+SELECT '5'::uint128 + '2'::uint128;
  ?column? 
 ----------
  7
 (1 row)
 
 -- TEST -- operator add (failure)
-SELECT :uint128_max + 1::uint128;
+SELECT :uint128_max + '1'::uint128;
 ERROR:  uint128 out of range
 -- TEST -- operator sub (success)
-SELECT 5::uint128 - 2::uint128;
+SELECT '5'::uint128 - '2'::uint128;
  ?column? 
 ----------
  3
 (1 row)
 
 -- TEST -- operator sub (failure)
-SELECT :uint128_min - 1::uint128;
+SELECT :uint128_min - '1'::uint128;
 ERROR:  uint128 out of range
 -- TEST -- operator mul (success)
-SELECT 5::uint128 * 2::uint128;
+SELECT '5'::uint128 * '2'::uint128;
  ?column? 
 ----------
  10
 (1 row)
 
 -- TEST -- operator mul (failure)
-SELECT :uint128_max * 2::uint128;
+SELECT :uint128_max * '2'::uint128;
 ERROR:  uint128 out of range
 -- TEST -- operator div (success)
-SELECT 5::uint128 / 2::uint128;
+SELECT '5'::uint128 / '2'::uint128;
  ?column? 
 ----------
  2
 (1 row)
 
 -- TEST -- operator div (failure)
-SELECT 5::uint128 / 0::uint128;
+SELECT '5'::uint128 / '0'::uint128;
 ERROR:  division by zero
 -- TEST -- operator mod (success)
-SELECT 5::uint128 % 2::uint128;
+SELECT '5'::uint128 % '2'::uint128;
  ?column? 
 ----------
  1
 (1 row)
 
 -- TEST -- operator mod (failure)
-SELECT 5::uint128 % 0::uint128;
+SELECT '5'::uint128 % '0'::uint128;
 ERROR:  division by zero
 -- TEST -- operator lt (success)
-SELECT 5::uint128 < 2::uint128;
+SELECT '5'::uint128 < '2'::uint128;
  ?column? 
 ----------
  f
 (1 row)
 
 -- TEST -- operator lt (success)
-SELECT 5::uint128 < 5::uint128;
+SELECT '5'::uint128 < '5'::uint128;
  ?column? 
 ----------
  f
 (1 row)
 
 -- TEST -- operator gt (success)
-SELECT 5::uint128 > 2::uint128;
+SELECT '5'::uint128 > '2'::uint128;
  ?column? 
 ----------
  t
 (1 row)
 
 -- TEST -- operator gt (success)
-SELECT 5::uint128 > 5::uint128;
+SELECT '5'::uint128 > '5'::uint128;
  ?column? 
 ----------
  f
 (1 row)
 
 -- TEST -- operator lteq (success)
-SELECT 5::uint128 <= 2::uint128;
+SELECT '5'::uint128 <= '2'::uint128;
  ?column? 
 ----------
  f
 (1 row)
 
 -- TEST -- operator lteq (success)
-SELECT 5::uint128 <= 5::uint128;
+SELECT '5'::uint128 <= '5'::uint128;
  ?column? 
 ----------
  t
 (1 row)
 
 -- TEST -- operator gteq (success)
-SELECT 5::uint128 >= 2::uint128;
+SELECT '5'::uint128 >= '2'::uint128;
  ?column? 
 ----------
  t
 (1 row)
 
 -- TEST -- operator gteq (success)
-SELECT 5::uint128 >= 5::uint128;
+SELECT '5'::uint128 >= '5'::uint128;
  ?column? 
 ----------
  t
 (1 row)
 
 -- TEST -- operator eq (success)
-SELECT 5::uint128 = 2::uint128;
+SELECT '5'::uint128 = '2'::uint128;
  ?column? 
 ----------
  f
 (1 row)
 
 -- TEST -- operator eq (success)
-SELECT 5::uint128 = 5::uint128;
+SELECT '5'::uint128 = '5'::uint128;
  ?column? 
 ----------
  t
 (1 row)
 
 -- TEST -- operator neq (success)
-SELECT 5::uint128 <> 2::uint128;
+SELECT '5'::uint128 <> '2'::uint128;
  ?column? 
 ----------
  t
 (1 row)
 
 -- TEST -- operator neq (success)
-SELECT 5::uint128 <> 5::uint128;
+SELECT '5'::uint128 <> '5'::uint128;
  ?column? 
 ----------
  f
 (1 row)
 
 -- TEST -- operator uplus (success)
-SELECT +(5::uint128);
+SELECT +('5'::uint128);
  ?column? 
 ----------
  5
 (1 row)
 
 -- TEST -- operator uminus (success)
-SELECT -(0::uint128);
+SELECT -('0'::uint128);
  ?column? 
 ----------
  0
 (1 row)
 
 -- TEST -- operator uminus (failure)
-SELECT -(5::uint128);
+SELECT -('5'::uint128);
 ERROR:  uint128 out of range
 -- TEST -- operator abs (success)
-SELECT @(5::uint128);
+SELECT @('5'::uint128);
  ?column? 
 ----------
  5
 (1 row)
 
 -- TEST -- operator bitand (success)
-SELECT 5::uint128 & 2::uint128;
+SELECT '5'::uint128 & '2'::uint128;
  ?column? 
 ----------
  0
 (1 row)
 
 -- TEST -- operator bitor (success)
-SELECT 5::uint128 | 2::uint128;
+SELECT '5'::uint128 | '2'::uint128;
  ?column? 
 ----------
  7
 (1 row)
 
 -- TEST -- operator bitxor (success)
-SELECT 5::uint128 # 2::uint128;
+SELECT '5'::uint128 # '2'::uint128;
  ?column? 
 ----------
  7
 (1 row)
 
 -- TEST -- operator bitnot (success)
-SELECT ~(2::uint128);
+SELECT ~('2'::uint128);
                 ?column?                 
 -----------------------------------------
  340282366920938463463374607431768211453
 (1 row)
 
 -- TEST -- operator bitshiftleft (success)
-SELECT 5::uint128 << 2;
+SELECT '5'::uint128 << 2;
  ?column? 
 ----------
  20
 (1 row)
 
 -- TEST -- operator bitshiftright (success)
-SELECT 5::uint128 >> 2;
+SELECT '5'::uint128 >> 2;
  ?column? 
 ----------
  1
 (1 row)
 
 -- TEST -- cast uint128 as smallint (success)
-SELECT 5::uint128::smallint;
+SELECT '5'::uint128::smallint;
  int2 
 ------
     5
@@ -244,7 +244,7 @@ SELECT 5::uint128::smallint;
 SELECT :uint128_max::smallint;
 ERROR:  smallint out of range
 -- TEST -- cast uint128 as integer (success)
-SELECT 5::uint128::integer;
+SELECT '5'::uint128::integer;
  int4 
 ------
     5
@@ -254,7 +254,7 @@ SELECT 5::uint128::integer;
 SELECT :uint128_max::integer;
 ERROR:  integer out of range
 -- TEST -- cast uint128 as bigint (success)
-SELECT 5::uint128::bigint;
+SELECT '5'::uint128::bigint;
  int8 
 ------
     5
@@ -264,7 +264,7 @@ SELECT 5::uint128::bigint;
 SELECT :uint128_max::bigint;
 ERROR:  bigint out of range
 -- TEST -- cast uint128 as int128 (success)
-SELECT 5::uint128::int128;
+SELECT '5'::uint128::int128;
  int128 
 --------
  5
@@ -273,3 +273,47 @@ SELECT 5::uint128::int128;
 -- TEST -- cast uint128 as int128 (failure)
 SELECT :uint128_max::int128;
 ERROR:  int128 out of range
+-- TEST -- cast uint128 as int256 (success)
+SELECT '5'::uint128::int256;
+ int256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast uint128 as uint256 (success)
+SELECT '5'::uint128::uint256;
+ uint256 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast smallint as uint128 (success)
+SELECT '5'::smallint::uint128;
+ uint128 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast smallint as uint128 (failure)
+SELECT '-5'::smallint::uint128;
+ERROR:  uint128 out of range
+-- TEST -- cast integer as uint128 (success)
+SELECT '5'::integer::uint128;
+ uint128 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast integer as uint128 (failure)
+SELECT '-5'::integer::uint128;
+ERROR:  uint128 out of range
+-- TEST -- cast bigint as uint128 (success)
+SELECT '5'::bigint::uint128;
+ uint128 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast bigint as uint128 (failure)
+SELECT '-5'::bigint::uint128;
+ERROR:  uint128 out of range

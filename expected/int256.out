@@ -1,0 +1,338 @@
+-- TEST -- in function (success)
+SELECT '0'::int256;
+ int256 
+--------
+ 0
+(1 row)
+
+-- TEST -- in function min (success)
+SELECT '-57896044618658097711785492504343953926634992332820282019728792003956564819968'::int256;
+                                     int256                                     
+--------------------------------------------------------------------------------
+ -57896044618658097711785492504343953926634992332820282019728792003956564819968
+(1 row)
+
+-- TEST -- in function max (success)
+SELECT '57896044618658097711785492504343953926634992332820282019728792003956564819967'::int256;
+                                    int256                                     
+-------------------------------------------------------------------------------
+ 57896044618658097711785492504343953926634992332820282019728792003956564819967
+(1 row)
+
+-- TEST -- in function min - 1 (failure)
+SELECT '-57896044618658097711785492504343953926634992332820282019728792003956564819969'::int256;
+ERROR:  value "-57896044618658097711785492504343953926634992332820282019728792003956564819969" is out of range for type int256
+LINE 1: SELECT '-578960446186580977117854925043439539266349923328202...
+               ^
+-- TEST -- in function max + 1 (failure)
+SELECT '57896044618658097711785492504343953926634992332820282019728792003956564819968'::int256;
+ERROR:  value "57896044618658097711785492504343953926634992332820282019728792003956564819968" is out of range for type int256
+LINE 1: SELECT '5789604461865809771178549250434395392663499233282028...
+               ^
+-- min variable
+\set int256_min '\'-57896044618658097711785492504343953926634992332820282019728792003956564819968\'::int256'
+-- max variable
+\set int256_max '\'57896044618658097711785492504343953926634992332820282019728792003956564819967\'::int256'
+-- TEST -- operator add (success)
+SELECT '5'::int256 + '2'::int256;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator add (failure)
+SELECT :int256_max + '1'::int256;
+ERROR:  int256 out of range
+-- TEST -- operator sub (success)
+SELECT '5'::int256 - '2'::int256;
+ ?column? 
+----------
+ 3
+(1 row)
+
+-- TEST -- operator sub (failure)
+SELECT :int256_min - '1'::int256;
+ERROR:  int256 out of range
+-- TEST -- operator mul (success)
+SELECT '5'::int256 * '2'::int256;
+ ?column? 
+----------
+ 10
+(1 row)
+
+-- TEST -- operator mul (failure)
+SELECT :int256_max * '2'::int256;
+ERROR:  int256 out of range
+-- TEST -- operator div (success)
+SELECT '5'::int256 / '2'::int256;
+ ?column? 
+----------
+ 2
+(1 row)
+
+-- TEST -- operator div (failure)
+SELECT '5'::int256 / '0'::int256;
+ERROR:  division by zero
+-- TEST -- operator div (failure)
+SELECT :int256_min / '-1'::int256;
+ERROR:  int256 out of range
+-- TEST -- operator mod (success)
+SELECT '5'::int256 % '2'::int256;
+ ?column? 
+----------
+ 1
+(1 row)
+
+-- TEST -- operator mod (failure)
+SELECT '5'::int256 % '0'::int256;
+ERROR:  division by zero
+-- TEST -- operator lt (success)
+SELECT '5'::int256 < '2'::int256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lt (success)
+SELECT '5'::int256 < '5'::int256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator gt (success)
+SELECT '5'::int256 > '2'::int256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gt (success)
+SELECT '5'::int256 > '5'::int256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lteq (success)
+SELECT '5'::int256 <= '2'::int256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lteq (success)
+SELECT '5'::int256 <= '5'::int256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gteq (success)
+SELECT '5'::int256 >= '2'::int256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gteq (success)
+SELECT '5'::int256 >= '5'::int256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator eq (success)
+SELECT '5'::int256 = '2'::int256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator eq (success)
+SELECT '5'::int256 = '5'::int256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator neq (success)
+SELECT '5'::int256 <> '2'::int256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator neq (success)
+SELECT '5'::int256 <> '5'::int256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator uplus (success)
+SELECT +('5'::int256);
+ ?column? 
+----------
+ 5
+(1 row)
+
+-- TEST -- operator uminus (success)
+SELECT -('5'::int256);
+ ?column? 
+----------
+ -5
+(1 row)
+
+-- TEST -- operator abs (success)
+SELECT @('5'::int256);
+ ?column? 
+----------
+ 5
+(1 row)
+
+-- TEST -- operator abs (success)
+SELECT @('-5'::int256);
+ ?column? 
+----------
+ 5
+(1 row)
+
+-- TEST -- operator abs (failure)
+SELECT @(:int256_min);
+ERROR:  int256 out of range
+-- TEST -- operator bitand (success)
+SELECT '5'::int256 & '2'::int256;
+ ?column? 
+----------
+ 0
+(1 row)
+
+-- TEST -- operator bitor (success)
+SELECT '5'::int256 | '2'::int256;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator bitxor (success)
+SELECT '5'::int256 # '2'::int256;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator bitnot (success)
+SELECT ~('2'::int256);
+ ?column? 
+----------
+ -3
+(1 row)
+
+-- TEST -- operator bitshiftleft (success)
+SELECT '5'::int256 << 2;
+ ?column? 
+----------
+ 20
+(1 row)
+
+-- TEST -- operator bitshiftright (success)
+SELECT '5'::int256 >> 2;
+ ?column? 
+----------
+ 1
+(1 row)
+
+-- TEST -- cast int256 as smallint (success)
+SELECT '5'::int256::smallint;
+ int2 
+------
+    5
+(1 row)
+
+-- TEST -- cast int256 as smallint (failure)
+SELECT :int256_max::smallint;
+ERROR:  smallint out of range
+-- TEST -- cast int256 as smallint (failure)
+SELECT :int256_min::smallint;
+ERROR:  smallint out of range
+-- TEST -- cast int256 as integer (success)
+SELECT '5'::int256::integer;
+ int4 
+------
+    5
+(1 row)
+
+-- TEST -- cast int256 as integer (failure)
+SELECT :int256_max::integer;
+ERROR:  integer out of range
+-- TEST -- cast int256 as integer (failure)
+SELECT :int256_min::integer;
+ERROR:  integer out of range
+-- TEST -- cast int256 as bigint (success)
+SELECT '5'::int256::bigint;
+ int8 
+------
+    5
+(1 row)
+
+-- TEST -- cast int256 as bigint (failure)
+SELECT :int256_max::bigint;
+ERROR:  bigint out of range
+-- TEST -- cast int256 as bigint (failure)
+SELECT :int256_min::bigint;
+ERROR:  bigint out of range
+-- TEST -- cast int256 as int128 (success)
+SELECT '5'::int256::int128;
+ int128 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast int256 as int128 (failure)
+SELECT :int256_min::int128;
+ERROR:  int128 out of range
+-- TEST -- cast int256 as int128 (failure)
+SELECT :int256_max::int128;
+ERROR:  int128 out of range
+-- TEST -- cast int256 as uint128 (success)
+SELECT '5'::int256::uint128;
+ uint128 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast int256 as uint128 (failure)
+SELECT '-5'::int256::uint128;
+ERROR:  uint128 out of range
+-- TEST -- cast int256 as uint256 (success)
+SELECT '5'::int256::uint256;
+ uint256 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast int256 as uint256 (failure)
+SELECT '-5'::int256::uint256;
+ERROR:  uint256 out of range
+-- TEST -- cast smallint as int256 (success)
+SELECT '5'::smallint::int256;
+ int256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast integer as int256 (success)
+SELECT '5'::integer::int256;
+ int256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast bigint as int256 (success)
+SELECT '5'::bigint::int256;
+ int256 
+--------
+ 5
+(1 row)
+

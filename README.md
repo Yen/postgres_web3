@@ -30,8 +30,8 @@ In order to address these issues, postgres_web3 adds fixed signed and unsigned i
 
 - `int128` A signed 128 bit integer
 - `uint128` A unsigned 128 bit integer
-- ~~`int256` A signed 256 bit integer~~ (TODO)
-- ~~`uint256` A unsigned 256 bit integer~~ (TODO)
+- `int256` A signed 256 bit integer
+- `uint256` A unsigned 256 bit integer
 - ~~`hex160` A 160 bit hex string (Such as ethereum addresses)~~ (TODO)
 - ~~`hex256` A 256 bit hex string (Such as ethereum block hashes)~~ (TODO)
 
@@ -49,26 +49,26 @@ _More data types may be added in the future if they are seen to be prevelant thr
 
 _For easier compatibility with existing expressions, operators relating to the sign of numbers (`uplus`, `uminus`, `abs`) are implemented for signed and unsigned types. Where applicable, these may raise "out of range" errors. An example of this is calling `uminus` on a unsigned integer type with a value other than `0`._
 
-- add (`type + type`) -> `type` for `int128`, `uint128`
-- sub (`type - type`) -> `type` for `int128`, `uint128`
-- mul (`type * type`) -> `type` for `int128`, `uint128`
-- div (`type / type`) -> `type` for `int128`, `uint128`
-- mod (`type % type`) -> `type` for `int128`, `uint128`
-- lt (`type < type`) -> `boolean` for `int128`, `uint128`
-- gt (`type > type`) -> `boolean` for `int128`, `uint128`
-- lteq (`type <= type`) -> `boolean` for `int128`, `uint128`
-- gteq (`type >= type`) -> `boolean` for `int128`, `uint128`
-- eq (`type = type`) -> `boolean` for `int128`, `uint128`
-- neq (`type <> type`) -> `boolean` for `int128`, `uint128`
-- uplus (`+type`) -> `type` for `int128`, `uint128`
-- uminus (`-type`) -> `type` for `int128`, `uint128`
-- abs (`@type`) -> `type` for `int128`, `uint128`
-- bitand (`type & type`) -> `type` for `int128`, `uint128`
-- bitor (`type | type`) -> `type` for `int128`, `uint128`
-- bitxor (`type # type`) -> `type` for `int128`, `uint128`
-- bitnot (`~type`) -> `type` for `int128`, `uint128`
-- bitshiftleft (`type << integer`) -> `type` for `int128`, `uint128`
-- bitshiftright (`type >> integer`) -> `type` for `int128`, `uint128`
+- add (`type + type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- sub (`type - type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- mul (`type * type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- div (`type / type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- mod (`type % type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- lt (`type < type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
+- gt (`type > type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
+- lteq (`type <= type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
+- gteq (`type >= type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
+- eq (`type = type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
+- neq (`type <> type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
+- uplus (`+type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- uminus (`-type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- abs (`@type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- bitand (`type & type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- bitor (`type | type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- bitxor (`type # type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- bitnot (`~type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- bitshiftleft (`type << integer`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- bitshiftright (`type >> integer`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
 
 ## Available casts
 
@@ -76,20 +76,22 @@ Casts in PostgreSQL can by default require an explicit cast operator (`::type`).
 
 _We follow the PostgreSQL pattern of only allowing implicit casts for types that will never fail to convert. As such, casting from any signed integer type to any unsigned integer type is not an implicit cast in postgres_web3._
 
-|From          |As `smallint`|As `integer`|As `bigint`|As `int128`|As `uint128`|
-|---           |---          |---         |---        |---        |---         |
-|**`smallint`**|             |implicit    |implicit   |implicit   |assignment  |
-|**`integer`** |assignment   |            |implicit   |implicit   |assignment  |
-|**`bigint`**  |assignment   |assignment  |           |implicit   |assignment  |
-|**`int128`**  |assignment   |assignment  |assignment |           |assignment  |
-|**`uint128`** |assignment   |assignment  |assignment |assignment |            |
+|From          |As `smallint`|As `integer`|As `bigint`|As `int128`|As `uint128`|As `int256`|As `uint256`|
+|---           |---          |---         |---        |---        |---         |---        |---         |
+|**`smallint`**|             |implicit    |implicit   |implicit   |assignment  |implicit   |assignment  |
+|**`integer`** |assignment   |            |implicit   |implicit   |assignment  |implicit   |assignment  |
+|**`bigint`**  |assignment   |assignment  |           |implicit   |assignment  |implicit   |assignment  |
+|**`int128`**  |assignment   |assignment  |assignment |           |assignment  |implicit   |assignment  |
+|**`uint128`** |assignment   |assignment  |assignment |assignment |            |assignment |implicit    |
+|**`int256`**  |assignment   |assignment  |assignment |assignment |assignment  |           |assignment  |
+|**`uint256`** |assignment   |assignment  |assignment |assignment |assignment  |assignment |            |
 
 ## Available aggregates
 
-- `sum(type)` -> `type` for `int128`, `uint128`
-- `min(type)` -> `type` for `int128`, `uint128`
-- `max(type)` -> `type` for `int128`, `uint128`
-- `avg(type)` -> `numeric` for `int128`, `uint128`
+- `sum(type)` -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- `min(type)` -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- `max(type)` -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- `avg(type)` -> `numeric` for `int128`, `uint128`, `int256`, `uint256`
 
 _The `avg(type)` family of aggregates are currently implemented using a `double precision` sum type internally and are not accurate for larger sums. We hope to address this in the future._
 
