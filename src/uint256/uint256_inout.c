@@ -114,9 +114,12 @@ Datum uint256_send(PG_FUNCTION_ARGS)
     StringInfoData buf;
     pq_begintypsend(&buf);
 
-    pw3_uint256 value = *data;
-    pw3_bswap(&value, sizeof(pw3_uint256));
-    pq_sendbytes(&buf, &value, sizeof(pw3_uint256));
+    uint8_t bytes[PW3_UINT256_PACKED_SIZE];
+    for (size_t i = 0; i < PW3_UINT256_PACKED_SIZE; i++)
+    {
+        bytes[i] = (*data >> 8 * (PW3_UINT256_PACKED_SIZE - i - 1)) && 0xFF;
+    }
+    pq_sendbytes(&buf, bytes, PW3_UINT256_PACKED_SIZE);
 
     PG_RETURN_BYTEA_P(pq_endtypsend(&buf));
 }
@@ -126,9 +129,13 @@ Datum uint256_recv(PG_FUNCTION_ARGS)
 {
     StringInfo buf = (StringInfo)PG_GETARG_POINTER(0);
 
-    pw3_uint256 *value = pw3_uint256_palloc(0);
-    pq_copymsgbytes(buf, (char *)value, sizeof(pw3_uint256));
-    pw3_bswap(value, sizeof(pw3_uint256));
+    uint8_t bytes[PW3_UINT256_PACKED_SIZE];
+    pq_copymsgbytes(buf, bytes, PW3_UINT256_PACKED_SIZE);
 
+    pw3_uint256 *value = pw3_uint256_palloc(0);
+    for (size_t i = 0; i < PW3_UINT256_PACKED_SIZE; i++)
+    {
+        *value |= (pw3_uint256)bytes[i] << 8 * (PW3_UINT256_PACKED_SIZE - i - 1);
+    }
     PW3_RETURN_UINT256_P(value);
 }

@@ -6,15 +6,15 @@
 
 #include <assert.h>
 
-void pw3_bswap(void *buf, size_t count);
-
 void *pw3_agg_context_palloc0(FunctionCallInfo fcinfo, size_t size);
 #define pw3_agg_context_palloc0_object(fcinfo, type) (type *)pw3_agg_context_palloc0(fcinfo, sizeof(type))
 
 // pw3_int128
 
 typedef _BitInt(128) pw3_int128;
-static_assert(sizeof(pw3_int128) == 16, "expected pw3_int128 to be 16 bytes");
+#define PW3_INT128_PACKED_SIZE 16
+#define PW3_INT128_ALLOC_SIZE 16
+static_assert(sizeof(pw3_int128) <= PW3_INT128_ALLOC_SIZE, "sizeof pw3_int128 greater than alloc size");
 
 pw3_int128 *pw3_int128_palloc(pw3_int128 value);
 
@@ -29,7 +29,9 @@ pw3_int128 *pw3_int128_palloc(pw3_int128 value);
 // pw3_uint128
 
 typedef unsigned _BitInt(128) pw3_uint128;
-static_assert(sizeof(pw3_uint128) == 16, "expected pw3_uint128 to be 16 bytes");
+#define PW3_UINT128_PACKED_SIZE 16
+#define PW3_UINT128_ALLOC_SIZE 16
+static_assert(sizeof(pw3_uint128) <= PW3_UINT128_ALLOC_SIZE, "sizeof pw3_uint128 greater than alloc size");
 
 pw3_uint128 *pw3_uint128_palloc(pw3_uint128 value);
 
@@ -44,7 +46,9 @@ pw3_uint128 *pw3_uint128_palloc(pw3_uint128 value);
 // pw3_int256
 
 typedef _BitInt(256) pw3_int256;
-static_assert(sizeof(pw3_int256) == 32, "expected pw3_int256 to be 32 bytes");
+#define PW3_INT256_PACKED_SIZE 32
+#define PW3_INT256_ALLOC_SIZE 32
+static_assert(sizeof(pw3_int256) <= PW3_INT256_ALLOC_SIZE, "sizeof pw3_int256 greater than alloc size");
 
 pw3_int256 *pw3_int256_palloc(pw3_int256 value);
 
@@ -64,7 +68,9 @@ bool pw3_int256_mul_overflow(pw3_int256 a, pw3_int256 b, pw3_int256 *res);
 // pw3_uint256
 
 typedef unsigned _BitInt(256) pw3_uint256;
-static_assert(sizeof(pw3_uint256) == 32, "expected pw3_uint256 to be 32 bytes");
+#define PW3_UINT256_PACKED_SIZE 32
+#define PW3_UINT256_ALLOC_SIZE 32
+static_assert(sizeof(pw3_uint256) <= PW3_UINT256_ALLOC_SIZE, "sizeof pw3_uint256 greater than alloc size");
 
 pw3_uint256 *pw3_uint256_palloc(pw3_uint256 value);
 
