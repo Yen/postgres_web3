@@ -2069,7 +2069,6 @@ CREATE AGGREGATE max(int128) (
 CREATE AGGREGATE avg(int128) (
     SFUNC = int128_avg_accum,
     STYPE = internal,
-    SSPACE = 16,
     COMBINEFUNC = int128_avg_combine,
     FINALFUNC = int128_avg_final
 );
@@ -2102,7 +2101,6 @@ CREATE AGGREGATE max(uint128) (
 CREATE AGGREGATE avg(uint128) (
     SFUNC = uint128_avg_accum,
     STYPE = internal,
-    SSPACE = 16,
     COMBINEFUNC = uint128_avg_combine,
     FINALFUNC = uint128_avg_final
 );
@@ -2135,7 +2133,6 @@ CREATE AGGREGATE max(int256) (
 CREATE AGGREGATE avg(int256) (
     SFUNC = int256_avg_accum,
     STYPE = internal,
-    SSPACE = 16,
     COMBINEFUNC = int256_avg_combine,
     FINALFUNC = int256_avg_final
 );
@@ -2168,7 +2165,6 @@ CREATE AGGREGATE max(uint256) (
 CREATE AGGREGATE avg(uint256) (
     SFUNC = uint256_avg_accum,
     STYPE = internal,
-    SSPACE = 16,
     COMBINEFUNC = uint256_avg_combine,
     FINALFUNC = uint256_avg_final
 );
