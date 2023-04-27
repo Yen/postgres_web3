@@ -124,6 +124,12 @@ SELECT '5'::uint128::int256;
 -- TEST -- cast uint128 as uint256 (success)
 SELECT '5'::uint128::uint256;
 
+-- TEST -- cast uint128 as hex160 (success)
+SELECT '5'::uint128::hex160;
+
+-- TEST -- cast uint128 as hex256 (success)
+SELECT '5'::uint128::hex256;
+
 -- TEST -- cast smallint as uint128 (success)
 SELECT '5'::smallint::uint128;
 -- TEST -- cast smallint as uint128 (failure)

@@ -4,7 +4,7 @@ PG_FUNCTION_INFO_V1(uint128_as_int2);
 Datum uint128_as_int2(PG_FUNCTION_ARGS)
 {
     pw3_uint128 *value = PW3_GETARG_UINT128_P(0);
-    if (*value > PG_INT16_MAX)
+    if (*value > (pw3_uint128)PG_INT16_MAX)
     {
         ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("smallint out of range")));
     }
@@ -15,7 +15,7 @@ PG_FUNCTION_INFO_V1(uint128_as_int4);
 Datum uint128_as_int4(PG_FUNCTION_ARGS)
 {
     pw3_uint128 *value = PW3_GETARG_UINT128_P(0);
-    if (*value > PG_INT32_MAX)
+    if (*value > (pw3_uint128)PG_INT32_MAX)
     {
         ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("integer out of range")));
     }
@@ -26,7 +26,7 @@ PG_FUNCTION_INFO_V1(uint128_as_int8);
 Datum uint128_as_int8(PG_FUNCTION_ARGS)
 {
     pw3_uint128 *value = PW3_GETARG_UINT128_P(0);
-    if (*value > PG_INT64_MAX)
+    if (*value > (pw3_uint128)PG_INT64_MAX)
     {
         ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("bigint out of range")));
     }
@@ -56,6 +56,20 @@ Datum uint128_as_uint256(PG_FUNCTION_ARGS)
 {
     pw3_uint128 *value = PW3_GETARG_UINT128_P(0);
     PW3_RETURN_UINT256_P(pw3_uint256_palloc(*value));
+}
+
+PG_FUNCTION_INFO_V1(uint128_as_hex160);
+Datum uint128_as_hex160(PG_FUNCTION_ARGS)
+{
+    pw3_uint128 *value = PW3_GETARG_UINT128_P(0);
+    PW3_RETURN_HEX160_P(pw3_hex160_palloc(*value));
+}
+
+PG_FUNCTION_INFO_V1(uint128_as_hex256);
+Datum uint128_as_hex256(PG_FUNCTION_ARGS)
+{
+    pw3_uint128 *value = PW3_GETARG_UINT128_P(0);
+    PW3_RETURN_HEX256_P(pw3_hex256_palloc(*value));
 }
 
 PG_FUNCTION_INFO_V1(int2_as_uint128);

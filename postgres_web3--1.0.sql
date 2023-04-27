@@ -97,6 +97,54 @@ LANGUAGE C IMMUTABLE STRICT;
 
 -- #endregion
 
+-- #region hex160 inout functions
+
+CREATE FUNCTION hex160_in(cstring)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_out(hex160)
+RETURNS cstring
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_send(hex160)
+RETURNS bytea
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_recv(internal)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
+-- #region hex256 inout functions
+
+CREATE FUNCTION hex256_in(cstring)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_out(hex256)
+RETURNS cstring
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_send(hex256)
+RETURNS bytea
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_recv(internal)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
 -- #region int128 operator functions
 
 CREATE FUNCTION int128_add(int128, int128)
@@ -513,6 +561,134 @@ LANGUAGE C IMMUTABLE STRICT;
 
 -- #endregion
 
+-- #region hex160 operator functions
+
+CREATE FUNCTION hex160_lt(hex160, hex160)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_gt(hex160, hex160)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_lteq(hex160, hex160)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_gteq(hex160, hex160)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_eq(hex160, hex160)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_neq(hex160, hex160)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_bitand(hex160, hex160)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_bitor(hex160, hex160)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_bitxor(hex160, hex160)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_bitnot(hex160)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_bitshiftleft(hex160, integer)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_bitshiftright(hex160, integer)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
+-- #region hex256 operator functions
+
+CREATE FUNCTION hex256_lt(hex256, hex256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_gt(hex256, hex256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_lteq(hex256, hex256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_gteq(hex256, hex256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_eq(hex256, hex256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_neq(hex256, hex256)
+RETURNS boolean
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_bitand(hex256, hex256)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_bitor(hex256, hex256)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_bitxor(hex256, hex256)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_bitnot(hex256)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_bitshiftleft(hex256, integer)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_bitshiftright(hex256, integer)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
 -- #region int128 aggregate functions
 
 CREATE FUNCTION int128_min(int128, int128)
@@ -661,6 +837,16 @@ RETURNS uint256
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
+CREATE FUNCTION int128_as_hex160(int128)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int128_as_hex256(int128)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
 CREATE FUNCTION int2_as_int128(smallint)
 RETURNS int128
 AS '$libdir/postgres_web3'
@@ -707,6 +893,16 @@ LANGUAGE C IMMUTABLE STRICT;
 
 CREATE FUNCTION uint128_as_uint256(uint128)
 RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint128_as_hex160(uint128)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint128_as_hex256(uint128)
+RETURNS hex256
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
@@ -759,6 +955,16 @@ RETURNS uint256
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
+CREATE FUNCTION int256_as_hex160(int256)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int256_as_hex256(int256)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
 CREATE FUNCTION int2_as_int256(smallint)
 RETURNS int256
 AS '$libdir/postgres_web3'
@@ -808,6 +1014,16 @@ RETURNS int256
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
+CREATE FUNCTION uint256_as_hex160(uint256)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION uint256_as_hex256(uint256)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
 CREATE FUNCTION int2_as_uint256(smallint)
 RETURNS uint256
 AS '$libdir/postgres_web3'
@@ -820,6 +1036,124 @@ LANGUAGE C IMMUTABLE STRICT;
 
 CREATE FUNCTION int8_as_uint256(bigint)
 RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
+-- #region hex160 cast functions
+
+CREATE FUNCTION hex160_as_int2(hex160)
+RETURNS smallint
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_as_int4(hex160)
+RETURNS integer
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_as_int8(hex160)
+RETURNS bigint
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_as_int128(hex160)
+RETURNS int128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_as_uint128(hex160)
+RETURNS uint128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_as_int256(hex160)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_as_uint256(hex160)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex160_as_hex256(hex160)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int2_as_hex160(smallint)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int4_as_hex160(integer)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int8_as_hex160(bigint)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+-- #endregion
+
+-- #region hex256 cast functions
+
+CREATE FUNCTION hex256_as_int2(hex256)
+RETURNS smallint
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_as_int4(hex256)
+RETURNS integer
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_as_int8(hex256)
+RETURNS bigint
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_as_int128(hex256)
+RETURNS int128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_as_uint128(hex256)
+RETURNS uint128
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_as_int256(hex256)
+RETURNS int256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_as_uint256(hex256)
+RETURNS uint256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION hex256_as_hex160(hex256)
+RETURNS hex160
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int2_as_hex256(smallint)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int4_as_hex256(integer)
+RETURNS hex256
+AS '$libdir/postgres_web3'
+LANGUAGE C IMMUTABLE STRICT;
+
+CREATE FUNCTION int8_as_hex256(bigint)
+RETURNS hex256
 AS '$libdir/postgres_web3'
 LANGUAGE C IMMUTABLE STRICT;
 
@@ -871,6 +1205,32 @@ CREATE TYPE uint256(
     OUTPUT = uint256_out,
     SEND = uint256_send,
     RECEIVE = uint256_recv,
+    INTERNALLENGTH = 32,
+    STORAGE = PLAIN
+);
+
+-- #endregion
+
+-- #region hex160
+
+CREATE TYPE hex160(
+    INPUT = hex160_in,
+    OUTPUT = hex160_out,
+    SEND = hex160_send,
+    RECEIVE = hex160_recv,
+    INTERNALLENGTH = 24,
+    STORAGE = PLAIN
+);
+
+-- #endregion
+
+-- #region hex256
+
+CREATE TYPE hex256(
+    INPUT = hex256_in,
+    OUTPUT = hex256_out,
+    SEND = hex256_send,
+    RECEIVE = hex256_recv,
     INTERNALLENGTH = 32,
     STORAGE = PLAIN
 );
@@ -1409,6 +1769,178 @@ CREATE OPERATOR >>(
 
 -- #endregion
 
+-- #region hex160 operators
+
+CREATE OPERATOR <(
+    LEFTARG = hex160,
+    RIGHTARG = hex160,
+    FUNCTION = hex160_lt,
+    NEGATOR = >=
+);
+
+CREATE OPERATOR >(
+    LEFTARG = hex160,
+    RIGHTARG = hex160,
+    FUNCTION = hex160_gt,
+    NEGATOR = <=
+);
+
+CREATE OPERATOR <=(
+    LEFTARG = hex160,
+    RIGHTARG = hex160,
+    FUNCTION = hex160_lteq,
+    NEGATOR = >
+);
+
+CREATE OPERATOR >=(
+    LEFTARG = hex160,
+    RIGHTARG = hex160,
+    FUNCTION = hex160_gteq,
+    NEGATOR = <
+);
+
+CREATE OPERATOR =(
+    LEFTARG = hex160,
+    RIGHTARG = hex160,
+    FUNCTION = hex160_eq,
+    COMMUTATOR = =,
+    NEGATOR = <>
+);
+
+CREATE OPERATOR <>(
+    LEFTARG = hex160,
+    RIGHTARG = hex160,
+    FUNCTION = hex160_neq,
+    COMMUTATOR = <>,
+    NEGATOR = =
+);
+
+CREATE OPERATOR &(
+    LEFTARG = hex160,
+    RIGHTARG = hex160,
+    FUNCTION = hex160_bitand,
+    COMMUTATOR = &
+);
+
+CREATE OPERATOR |(
+    LEFTARG = hex160,
+    RIGHTARG = hex160,
+    FUNCTION = hex160_bitor,
+    COMMUTATOR = |
+);
+
+CREATE OPERATOR #(
+    LEFTARG = hex160,
+    RIGHTARG = hex160,
+    FUNCTION = hex160_bitxor,
+    COMMUTATOR = #
+);
+
+CREATE OPERATOR ~(
+    RIGHTARG = hex160,
+    FUNCTION = hex160_bitnot
+);
+
+CREATE OPERATOR <<(
+    LEFTARG = hex160,
+    RIGHTARG = integer,
+    FUNCTION = hex160_bitshiftleft
+);
+
+CREATE OPERATOR >>(
+    LEFTARG = hex160,
+    RIGHTARG = integer,
+    FUNCTION = hex160_bitshiftright
+);
+
+-- #endregion
+
+-- #region hex256 operators
+
+CREATE OPERATOR <(
+    LEFTARG = hex256,
+    RIGHTARG = hex256,
+    FUNCTION = hex256_lt,
+    NEGATOR = >=
+);
+
+CREATE OPERATOR >(
+    LEFTARG = hex256,
+    RIGHTARG = hex256,
+    FUNCTION = hex256_gt,
+    NEGATOR = <=
+);
+
+CREATE OPERATOR <=(
+    LEFTARG = hex256,
+    RIGHTARG = hex256,
+    FUNCTION = hex256_lteq,
+    NEGATOR = >
+);
+
+CREATE OPERATOR >=(
+    LEFTARG = hex256,
+    RIGHTARG = hex256,
+    FUNCTION = hex256_gteq,
+    NEGATOR = <
+);
+
+CREATE OPERATOR =(
+    LEFTARG = hex256,
+    RIGHTARG = hex256,
+    FUNCTION = hex256_eq,
+    COMMUTATOR = =,
+    NEGATOR = <>
+);
+
+CREATE OPERATOR <>(
+    LEFTARG = hex256,
+    RIGHTARG = hex256,
+    FUNCTION = hex256_neq,
+    COMMUTATOR = <>,
+    NEGATOR = =
+);
+
+CREATE OPERATOR &(
+    LEFTARG = hex256,
+    RIGHTARG = hex256,
+    FUNCTION = hex256_bitand,
+    COMMUTATOR = &
+);
+
+CREATE OPERATOR |(
+    LEFTARG = hex256,
+    RIGHTARG = hex256,
+    FUNCTION = hex256_bitor,
+    COMMUTATOR = |
+);
+
+CREATE OPERATOR #(
+    LEFTARG = hex256,
+    RIGHTARG = hex256,
+    FUNCTION = hex256_bitxor,
+    COMMUTATOR = #
+);
+
+CREATE OPERATOR ~(
+    RIGHTARG = hex256,
+    FUNCTION = hex256_bitnot
+);
+
+CREATE OPERATOR <<(
+    LEFTARG = hex256,
+    RIGHTARG = integer,
+    FUNCTION = hex256_bitshiftleft
+);
+
+CREATE OPERATOR >>(
+    LEFTARG = hex256,
+    RIGHTARG = integer,
+    FUNCTION = hex256_bitshiftright
+);
+
+-- #endregion
+
 -- #region int128 casts
 
 CREATE CAST (int128 as smallint) WITH FUNCTION int128_as_int2 AS ASSIGNMENT;
@@ -1417,6 +1949,8 @@ CREATE CAST (int128 as bigint) WITH FUNCTION int128_as_int8 AS ASSIGNMENT;
 CREATE CAST (int128 as uint128) WITH FUNCTION int128_as_uint128 AS ASSIGNMENT;
 CREATE CAST (int128 as int256) WITH FUNCTION int128_as_int256 AS IMPLICIT;
 CREATE CAST (int128 as uint256) WITH FUNCTION int128_as_uint256 AS ASSIGNMENT;
+CREATE CAST (int128 as hex160) WITH FUNCTION int128_as_hex160;
+CREATE CAST (int128 as hex256) WITH FUNCTION int128_as_hex256;
 
 CREATE CAST (smallint as int128) WITH FUNCTION int2_as_int128 AS IMPLICIT;
 CREATE CAST (integer as int128) WITH FUNCTION int4_as_int128 AS IMPLICIT;
@@ -1432,6 +1966,8 @@ CREATE CAST (uint128 as bigint) WITH FUNCTION uint128_as_int8 AS ASSIGNMENT;
 CREATE CAST (uint128 as int128) WITH FUNCTION uint128_as_int128 AS ASSIGNMENT;
 CREATE CAST (uint128 as int256) WITH FUNCTION uint128_as_int256 AS ASSIGNMENT;
 CREATE CAST (uint128 as uint256) WITH FUNCTION uint128_as_uint256 AS IMPLICIT;
+CREATE CAST (uint128 as hex160) WITH FUNCTION uint128_as_hex160;
+CREATE CAST (uint128 as hex256) WITH FUNCTION uint128_as_hex256;
 
 CREATE CAST (smallint as uint128) WITH FUNCTION int2_as_uint128 AS ASSIGNMENT;
 CREATE CAST (integer as uint128) WITH FUNCTION int4_as_uint128 AS ASSIGNMENT;
@@ -1447,6 +1983,8 @@ CREATE CAST (int256 as bigint) WITH FUNCTION int256_as_int8 AS ASSIGNMENT;
 CREATE CAST (int256 as int128) WITH FUNCTION int256_as_int128 AS ASSIGNMENT;
 CREATE CAST (int256 as uint128) WITH FUNCTION int256_as_uint128 AS ASSIGNMENT;
 CREATE CAST (int256 as uint256) WITH FUNCTION int256_as_uint256 AS ASSIGNMENT;
+CREATE CAST (int256 as hex160) WITH FUNCTION int256_as_hex160;
+CREATE CAST (int256 as hex256) WITH FUNCTION int256_as_hex256;
 
 CREATE CAST (smallint as int256) WITH FUNCTION int2_as_int256 AS IMPLICIT;
 CREATE CAST (integer as int256) WITH FUNCTION int4_as_int256 AS IMPLICIT;
@@ -1462,10 +2000,46 @@ CREATE CAST (uint256 as bigint) WITH FUNCTION uint256_as_int8 AS ASSIGNMENT;
 CREATE CAST (uint256 as int128) WITH FUNCTION uint256_as_int128 AS ASSIGNMENT;
 CREATE CAST (uint256 as uint128) WITH FUNCTION uint256_as_uint128 AS ASSIGNMENT;
 CREATE CAST (uint256 as int256) WITH FUNCTION uint256_as_int256 AS ASSIGNMENT;
+CREATE CAST (uint256 as hex160) WITH FUNCTION uint256_as_hex160;
+CREATE CAST (uint256 as hex256) WITH FUNCTION uint256_as_hex256;
 
 CREATE CAST (smallint as uint256) WITH FUNCTION int2_as_uint256 AS ASSIGNMENT;
 CREATE CAST (integer as uint256) WITH FUNCTION int4_as_uint256 AS ASSIGNMENT;
 CREATE CAST (bigint as uint256) WITH FUNCTION int8_as_uint256 AS ASSIGNMENT;
+
+-- #endregion
+
+-- #region hex160 casts
+
+CREATE CAST (hex160 as smallint) WITH FUNCTION hex160_as_int2;
+CREATE CAST (hex160 as integer) WITH FUNCTION hex160_as_int4;
+CREATE CAST (hex160 as bigint) WITH FUNCTION hex160_as_int8;
+CREATE CAST (hex160 as int128) WITH FUNCTION hex160_as_int128;
+CREATE CAST (hex160 as uint128) WITH FUNCTION hex160_as_uint128;
+CREATE CAST (hex160 as int256) WITH FUNCTION hex160_as_int256;
+CREATE CAST (hex160 as uint256) WITH FUNCTION hex160_as_uint256;
+CREATE CAST (hex160 as hex256) WITH FUNCTION hex160_as_hex256 AS IMPLICIT;
+
+CREATE CAST (smallint as hex160) WITH FUNCTION int2_as_hex160;
+CREATE CAST (integer as hex160) WITH FUNCTION int4_as_hex160;
+CREATE CAST (bigint as hex160) WITH FUNCTION int8_as_hex160;
+
+-- #endregion
+
+-- #region hex256 casts
+
+CREATE CAST (hex256 as smallint) WITH FUNCTION hex256_as_int2;
+CREATE CAST (hex256 as integer) WITH FUNCTION hex256_as_int4;
+CREATE CAST (hex256 as bigint) WITH FUNCTION hex256_as_int8;
+CREATE CAST (hex256 as int128) WITH FUNCTION hex256_as_int128;
+CREATE CAST (hex256 as uint128) WITH FUNCTION hex256_as_uint128;
+CREATE CAST (hex256 as int256) WITH FUNCTION hex256_as_int256;
+CREATE CAST (hex256 as uint256) WITH FUNCTION hex256_as_uint256;
+CREATE CAST (hex256 as hex160) WITH FUNCTION hex256_as_hex160 AS ASSIGNMENT;
+
+CREATE CAST (smallint as hex256) WITH FUNCTION int2_as_hex256;
+CREATE CAST (integer as hex256) WITH FUNCTION int4_as_hex256;
+CREATE CAST (bigint as hex256) WITH FUNCTION int8_as_hex256;
 
 -- #endregion
 

@@ -4,7 +4,7 @@ PG_FUNCTION_INFO_V1(int256_as_int2);
 Datum int256_as_int2(PG_FUNCTION_ARGS)
 {
     pw3_int256 *value = PW3_GETARG_INT256_P(0);
-    if (*value < PG_INT16_MIN || *value > PG_INT16_MAX)
+    if (*value < (pw3_int256)PG_INT16_MIN || *value > (pw3_int256)PG_INT16_MAX)
     {
         ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("smallint out of range")));
     }
@@ -15,7 +15,7 @@ PG_FUNCTION_INFO_V1(int256_as_int4);
 Datum int256_as_int4(PG_FUNCTION_ARGS)
 {
     pw3_int256 *value = PW3_GETARG_INT256_P(0);
-    if (*value < PG_INT32_MIN || *value > PG_INT32_MAX)
+    if (*value < (pw3_int256)PG_INT32_MIN || *value > (pw3_int256)PG_INT32_MAX)
     {
         ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("integer out of range")));
     }
@@ -26,7 +26,7 @@ PG_FUNCTION_INFO_V1(int256_as_int8);
 Datum int256_as_int8(PG_FUNCTION_ARGS)
 {
     pw3_int256 *value = PW3_GETARG_INT256_P(0);
-    if (*value < PG_INT64_MIN || *value > PG_INT64_MAX)
+    if (*value < (pw3_int256)PG_INT64_MIN || *value > (pw3_int256)PG_INT64_MAX)
     {
         ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("bigint out of range")));
     }
@@ -64,6 +64,28 @@ Datum int256_as_uint256(PG_FUNCTION_ARGS)
         ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("uint256 out of range")));
     }
     PW3_RETURN_UINT256_P(pw3_uint256_palloc(*value));
+}
+
+PG_FUNCTION_INFO_V1(int256_as_hex160);
+Datum int256_as_hex160(PG_FUNCTION_ARGS)
+{
+    pw3_int256 *value = PW3_GETARG_INT256_P(0);
+    if (*value < 0 || *value > (pw3_int256)PW3_HEX160_MAX)
+    {
+        ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("hex160 out of range")));
+    }
+    PW3_RETURN_HEX160_P(pw3_hex160_palloc(*value));
+}
+
+PG_FUNCTION_INFO_V1(int256_as_hex256);
+Datum int256_as_hex256(PG_FUNCTION_ARGS)
+{
+    pw3_int256 *value = PW3_GETARG_INT256_P(0);
+    if (*value < 0)
+    {
+        ereport(ERROR, (errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE), errmsg("hex256 out of range")));
+    }
+    PW3_RETURN_HEX256_P(pw3_hex256_palloc(*value));
 }
 
 PG_FUNCTION_INFO_V1(int2_as_int256);

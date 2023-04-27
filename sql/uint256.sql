@@ -126,6 +126,14 @@ SELECT :uint256_max::uint128;
 -- TEST -- cast uint256 as int256 (success)
 SELECT '5'::uint256::int256;
 
+-- TEST -- cast uint256 as hex160 (success)
+SELECT '5'::uint256::hex160;
+-- TEST -- cast uint256 as hex160 (failure)
+SELECT :uint256_max::hex160;
+
+-- TEST -- cast uint256 as hex256 (success)
+SELECT '5'::uint256::hex256;
+
 -- TEST -- cast smallint as uint256 (success)
 SELECT '5'::smallint::uint256;
 -- TEST -- cast smallint as uint256 (failure)

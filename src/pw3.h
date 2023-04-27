@@ -82,4 +82,45 @@ pw3_uint256 *pw3_uint256_palloc(pw3_uint256 value);
 
 #define PW3_UINT256_STRLEN_MAX 79 /* 115792089237316195423570985008687907853269984665640564039457584007913129639935 */
 
+// pw3_hex160
+
+typedef unsigned _BitInt(160) pw3_hex160;
+#define PW3_HEX160_PACKED_SIZE 20
+// as of time of writing, clang16 pads the _BitInt(160) from 20 bytes to 24.
+// as far as the current spec goes, this is compiler specific behaviour and
+// something we can revisit in the future if there is a way to do this dynamically
+// if the compiler does/doesnt pad or we have a fix to take away the padding
+// in memory. Right now, we dont try and work around it and waste the space as there
+// is a worry we cannot maintain backwards compatibility with extension versions if
+// we need to change the INTERNALLENGTH on the postgres CREATE TYPE statement.
+#define PW3_HEX160_ALLOC_SIZE 24
+static_assert(sizeof(pw3_hex160) <= PW3_HEX160_ALLOC_SIZE, "sizeof pw3_hex160 greater than alloc size");
+
+pw3_hex160 *pw3_hex160_palloc(pw3_hex160 value);
+
+#define PW3_HEX160_MAX ((pw3_hex160)0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFuwb)
+#define PW3_HEX160_MIN ((pw3_hex160)0uwb)
+
+#define PW3_GETARG_HEX160_P(n) ((pw3_hex160 *)PG_GETARG_DATUM(n))
+#define PW3_RETURN_HEX160_P(x) return ((Datum)(x))
+
+#define PW3_HEX160_STRLEN_MAX 40 /* ffffffffffffffffffffffffffffffffffffffff */
+
+// pw3_hex160
+
+typedef unsigned _BitInt(256) pw3_hex256;
+#define PW3_HEX256_PACKED_SIZE 32
+#define PW3_HEX256_ALLOC_SIZE 32
+static_assert(sizeof(pw3_hex256) <= PW3_HEX256_ALLOC_SIZE, "sizeof pw3_hex256 greater than alloc size");
+
+pw3_hex256 *pw3_hex256_palloc(pw3_hex256 value);
+
+#define PW3_HEX256_MAX ((pw3_hex256)0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFuwb)
+#define PW3_HEX256_MIN ((pw3_hex256)0uwb)
+
+#define PW3_GETARG_HEX256_P(n) ((pw3_hex256 *)PG_GETARG_DATUM(n))
+#define PW3_RETURN_HEX256_P(x) return ((Datum)(x))
+
+#define PW3_HEX256_STRLEN_MAX 64 /* ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff */
+
 #endif /* PW3_H */

@@ -94,7 +94,25 @@ bool pw3_int256_mul_overflow(pw3_int256 a, pw3_int256 b, pw3_int256 *res)
 
 pw3_uint256 *pw3_uint256_palloc(pw3_uint256 value)
 {
-    pw3_uint256 *ptr = palloc_object(pw3_uint256);
+    pw3_uint256 *ptr = palloc0(PW3_UINT256_ALLOC_SIZE);
+    *ptr = value;
+    return ptr;
+}
+
+// pw3_hex160
+
+pw3_hex160 *pw3_hex160_palloc(pw3_hex160 value)
+{
+    pw3_hex160 *ptr = palloc0(PW3_HEX160_ALLOC_SIZE);
+    *ptr = value;
+    return ptr;
+}
+
+// pw3_hex256
+
+pw3_hex256 *pw3_hex256_palloc(pw3_hex256 value)
+{
+    pw3_hex256 *ptr = palloc0(PW3_HEX256_ALLOC_SIZE);
     *ptr = value;
     return ptr;
 }

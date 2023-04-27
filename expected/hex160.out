@@ -1,0 +1,257 @@
+-- TEST -- in function min (success)
+SELECT '0'::hex160;
+ hex160 
+--------
+ 0
+(1 row)
+
+-- TEST -- in function max (success)
+SELECT 'ffffffffffffffffffffffffffffffffffffffff'::hex160;
+                  hex160                  
+------------------------------------------
+ ffffffffffffffffffffffffffffffffffffffff
+(1 row)
+
+-- TEST -- in function max (success)
+SELECT 'fFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfF'::hex160;
+                  hex160                  
+------------------------------------------
+ ffffffffffffffffffffffffffffffffffffffff
+(1 row)
+
+-- TEST -- in function max + 1 (failure)
+SELECT 'ffffffffffffffffffffffffffffffffffffffff1'::hex160;
+ERROR:  value "ffffffffffffffffffffffffffffffffffffffff1" is out of range for type hex160
+LINE 1: SELECT 'ffffffffffffffffffffffffffffffffffffffff1'::hex160;
+               ^
+-- min variable
+\set hex160_min '\'0\'::hex160'
+-- max variable
+\set hex160_max '\'ffffffffffffffffffffffffffffffffffffffff\'::hex160'
+-- TEST -- operator lt (success)
+SELECT '5'::hex160 < '2'::hex160;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lt (success)
+SELECT '5'::hex160 < '5'::hex160;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator gt (success)
+SELECT '5'::hex160 > '2'::hex160;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gt (success)
+SELECT '5'::hex160 > '5'::hex160;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lteq (success)
+SELECT '5'::hex160 <= '2'::hex160;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lteq (success)
+SELECT '5'::hex160 <= '5'::hex160;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gteq (success)
+SELECT '5'::hex160 >= '2'::hex160;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gteq (success)
+SELECT '5'::hex160 >= '5'::hex160;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator eq (success)
+SELECT '5'::hex160 = '2'::hex160;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator eq (success)
+SELECT '5'::hex160 = '5'::hex160;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator neq (success)
+SELECT '5'::hex160 <> '2'::hex160;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator neq (success)
+SELECT '5'::hex160 <> '5'::hex160;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator bitand (success)
+SELECT '5'::hex160 & '2'::hex160;
+ ?column? 
+----------
+ 0
+(1 row)
+
+-- TEST -- operator bitor (success)
+SELECT '5'::hex160 | '2'::hex160;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator bitxor (success)
+SELECT '5'::hex160 # '2'::hex160;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator bitnot (success)
+SELECT ~('2'::hex160);
+                 ?column?                 
+------------------------------------------
+ fffffffffffffffffffffffffffffffffffffffd
+(1 row)
+
+-- TEST -- operator bitshiftleft (success)
+SELECT '5'::hex160 << 2;
+ ?column? 
+----------
+ 14
+(1 row)
+
+-- TEST -- operator bitshiftright (success)
+SELECT '5'::hex160 >> 2;
+ ?column? 
+----------
+ 1
+(1 row)
+
+-- TEST -- cast hex160 as smallint (success)
+SELECT '5'::hex160::smallint;
+ int2 
+------
+    5
+(1 row)
+
+-- TEST -- cast hex160 as smallint (failure)
+SELECT :hex160_max::smallint;
+ERROR:  smallint out of range
+-- TEST -- cast hex160 as integer (success)
+SELECT '5'::hex160::integer;
+ int4 
+------
+    5
+(1 row)
+
+-- TEST -- cast hex160 as integer (failure)
+SELECT :hex160_max::integer;
+ERROR:  integer out of range
+-- TEST -- cast hex160 as bigint (success)
+SELECT '5'::hex160::bigint;
+ int8 
+------
+    5
+(1 row)
+
+-- TEST -- cast hex160 as bigint (failure)
+SELECT :hex160_max::bigint;
+ERROR:  bigint out of range
+-- TEST -- cast hex160 as int128 (success)
+SELECT '5'::hex160::int128;
+ int128 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast hex160 as int128 (failure)
+SELECT :hex160_max::int128;
+ERROR:  int128 out of range
+-- TEST -- cast hex160 as uint128 (success)
+SELECT '5'::hex160::uint128;
+ uint128 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast hex160 as uint128 (failure)
+SELECT :hex160_max::uint128;
+ERROR:  uint128 out of range
+-- TEST -- cast hex160 as int256 (success)
+SELECT '5'::hex160::int256;
+ int256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast hex160 as uint256 (success)
+SELECT '5'::hex160::uint256;
+ uint256 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast hex160 as hex256 (success)
+SELECT '5'::hex160::hex256;
+ hex256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast smallint as hex160 (success)
+SELECT '5'::smallint::hex160;
+ hex160 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast smallint as hex160 (failure)
+SELECT '-5'::smallint::hex160;
+ERROR:  hex160 out of range
+-- TEST -- cast integer as hex160 (success)
+SELECT '5'::integer::hex160;
+ hex160 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast integer as hex160 (failure)
+SELECT '-5'::integer::hex160;
+ERROR:  hex160 out of range
+-- TEST -- cast bigint as hex160 (success)
+SELECT '5'::bigint::hex160;
+ hex160 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast bigint as hex160 (failure)
+SELECT '-5'::bigint::hex160;
+ERROR:  hex160 out of range

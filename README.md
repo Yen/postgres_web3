@@ -32,14 +32,14 @@ In order to address these issues, postgres_web3 adds fixed signed and unsigned i
 - `uint128` A unsigned 128 bit integer
 - `int256` A signed 256 bit integer
 - `uint256` A unsigned 256 bit integer
-- ~~`hex160` A 160 bit hex string (Such as ethereum addresses)~~ (TODO)
-- ~~`hex256` A 256 bit hex string (Such as ethereum block hashes)~~ (TODO)
+- `hex160` A 160 bit hex string (Such as ethereum addresses)
+- `hex256` A 256 bit hex string (Such as ethereum block hashes)
 
 Integer data types are constructable from a base-10 integer string (e.g. `'1000'::int128`). For compatibility, unsigned data types can be constructed with negative values but only if the negative integer string is `'-0'`.
 
-Hex data types are constructed from a case-insensitive non-prefixed base-16 hex string following the PostgreSQL `decode(..., 'hex')` behavior (e.g. `'0123AbCd'::hex160`). Hex string are interpereted as being zero padded from the beginning of the string when the full string is not provided (e.g. `'f8f8f8f8f8f8f8f8f8f8'::hex160` is equivalent to `'00000000000000000000f8f8f8f8f8f8f8f8f8f8'::hex160`).
+Hex data types are constructed from a case-insensitive non-prefixed base-16 hex string following the PostgreSQL `decode(..., 'hex')` behavior (e.g. `'0123AbCd'::hex160`).
 
-Hex data types are string serialized to a lower case hex string following the PostgreSQL `encode(..., 'hex')` behaviour (e.g. `'0123abcd'`).
+Hex data types are string serialized to a lower case hex string following the PostgreSQL `encode(..., 'hex')` behaviour (e.g. `'0123abcd'`). Common PostgreSQL functions can be used to generate formats that may be easier to accept as input directly from the query. (e.g. for an ethereum address format: `CONCAT('0x', LPAD('88FF'::hex160::text, 20, '0')))` -> `0x00000000000000000000000000000000000088ff`)
 
 Hex data types do not preserve the case of input strings (e.g. `'FF'::hex160` is equivalent to `'ff'::hex160` for all operations, and vice versa).
 
@@ -54,21 +54,21 @@ _For easier compatibility with existing expressions, operators relating to the s
 - mul (`type * type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
 - div (`type / type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
 - mod (`type % type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
-- lt (`type < type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
-- gt (`type > type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
-- lteq (`type <= type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
-- gteq (`type >= type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
-- eq (`type = type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
-- neq (`type <> type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`
+- lt (`type < type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- gt (`type > type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- lteq (`type <= type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- gteq (`type >= type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- eq (`type = type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- neq (`type <> type`) -> `boolean` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
 - uplus (`+type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
 - uminus (`-type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
 - abs (`@type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
-- bitand (`type & type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
-- bitor (`type | type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
-- bitxor (`type # type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
-- bitnot (`~type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
-- bitshiftleft (`type << integer`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
-- bitshiftright (`type >> integer`) -> `type` for `int128`, `uint128`, `int256`, `uint256`
+- bitand (`type & type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- bitor (`type | type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- bitxor (`type # type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- bitnot (`~type`) -> `type` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- bitshiftleft (`type << integer`) -> `type` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
+- bitshiftright (`type >> integer`) -> `type` for `int128`, `uint128`, `int256`, `uint256`, `hex160`, `hex256`
 
 ## Available casts
 
@@ -76,15 +76,17 @@ Casts in PostgreSQL can by default require an explicit cast operator (`::type`).
 
 _We follow the PostgreSQL pattern of only allowing implicit casts for types that will never fail to convert. As such, casting from any signed integer type to any unsigned integer type is not an implicit cast in postgres_web3._
 
-|From          |As `smallint`|As `integer`|As `bigint`|As `int128`|As `uint128`|As `int256`|As `uint256`|
-|---           |---          |---         |---        |---        |---         |---        |---         |
-|**`smallint`**|             |implicit    |implicit   |implicit   |assignment  |implicit   |assignment  |
-|**`integer`** |assignment   |            |implicit   |implicit   |assignment  |implicit   |assignment  |
-|**`bigint`**  |assignment   |assignment  |           |implicit   |assignment  |implicit   |assignment  |
-|**`int128`**  |assignment   |assignment  |assignment |           |assignment  |implicit   |assignment  |
-|**`uint128`** |assignment   |assignment  |assignment |assignment |            |assignment |implicit    |
-|**`int256`**  |assignment   |assignment  |assignment |assignment |assignment  |           |assignment  |
-|**`uint256`** |assignment   |assignment  |assignment |assignment |assignment  |assignment |            |
+|From          |As `smallint`|As `integer`|As `bigint`|As `int128`|As `uint128`|As `int256`|As `uint256`|As `hex160`|As `hex256`|
+|---           |---          |---         |---        |---        |---         |---        |---         |---        |---        |
+|**`smallint`**|             |implicit    |implicit   |implicit   |assignment  |implicit   |assignment  |explicit   |explicit   |
+|**`integer`** |assignment   |            |implicit   |implicit   |assignment  |implicit   |assignment  |explicit   |explicit   |
+|**`bigint`**  |assignment   |assignment  |           |implicit   |assignment  |implicit   |assignment  |explicit   |explicit   |
+|**`int128`**  |assignment   |assignment  |assignment |           |assignment  |implicit   |assignment  |explicit   |explicit   |
+|**`uint128`** |assignment   |assignment  |assignment |assignment |            |assignment |implicit    |explicit   |explicit   |
+|**`int256`**  |assignment   |assignment  |assignment |assignment |assignment  |           |assignment  |explicit   |explicit   |
+|**`uint256`** |assignment   |assignment  |assignment |assignment |assignment  |assignment |            |explicit   |explicit   |
+|**`hex160`**  |explicit     |explicit    |explicit   |explicit   |explicit    |explicit   |explicit    |           |implicit   |
+|**`hex256`**  |explicit     |explicit    |explicit   |explicit   |explicit    |explicit   |explicit    |assignment |           |
 
 ## Available aggregates
 

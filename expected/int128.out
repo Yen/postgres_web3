@@ -309,6 +309,26 @@ SELECT '5'::int128::uint256;
 -- TEST -- cast int128 as uint256 (failure)
 SELECT '-5'::int128::uint256;
 ERROR:  uint256 out of range
+-- TEST -- cast int128 as hex160 (success)
+SELECT '5'::int128::hex160;
+ hex160 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast int128 as hex160 (failure)
+SELECT '-5'::int128::hex160;
+ERROR:  hex160 out of range
+-- TEST -- cast int128 as hex256 (success)
+SELECT '5'::int128::hex256;
+ hex256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast int128 as hex256 (failure)
+SELECT '-5'::int128::hex256;
+ERROR:  hex256 out of range
 -- TEST -- cast smallint as int128 (success)
 SELECT '5'::smallint::int128;
  int128 

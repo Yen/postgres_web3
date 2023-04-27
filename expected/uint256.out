@@ -290,6 +290,23 @@ SELECT '5'::uint256::int256;
  5
 (1 row)
 
+-- TEST -- cast uint256 as hex160 (success)
+SELECT '5'::uint256::hex160;
+ hex160 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast uint256 as hex160 (failure)
+SELECT :uint256_max::hex160;
+ERROR:  hex160 out of range
+-- TEST -- cast uint256 as hex256 (success)
+SELECT '5'::uint256::hex256;
+ hex256 
+--------
+ 5
+(1 row)
+
 -- TEST -- cast smallint as uint256 (success)
 SELECT '5'::smallint::uint256;
  uint256 

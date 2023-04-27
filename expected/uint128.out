@@ -287,6 +287,20 @@ SELECT '5'::uint128::uint256;
  5
 (1 row)
 
+-- TEST -- cast uint128 as hex160 (success)
+SELECT '5'::uint128::hex160;
+ hex160 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast uint128 as hex256 (success)
+SELECT '5'::uint128::hex256;
+ hex256 
+--------
+ 5
+(1 row)
+
 -- TEST -- cast smallint as uint128 (success)
 SELECT '5'::smallint::uint128;
  uint128 

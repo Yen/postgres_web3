@@ -1,0 +1,263 @@
+-- TEST -- in function min (success)
+SELECT '0'::hex256;
+ hex256 
+--------
+ 0
+(1 row)
+
+-- TEST -- in function max (success)
+SELECT 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'::hex256;
+                              hex256                              
+------------------------------------------------------------------
+ ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+(1 row)
+
+-- TEST -- in function max (success)
+SELECT 'fFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfFfF'::hex256;
+                              hex256                              
+------------------------------------------------------------------
+ ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+(1 row)
+
+-- TEST -- in function max + 1 (failure)
+SELECT 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1'::hex256;
+ERROR:  value "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1" is out of range for type hex256
+LINE 1: SELECT 'ffffffffffffffffffffffffffffffffffffffffffffffffffff...
+               ^
+-- min variable
+\set hex256_min '\'0\'::hex256'
+-- max variable
+\set hex256_max '\'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\'::hex256'
+-- TEST -- operator lt (success)
+SELECT '5'::hex256 < '2'::hex256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lt (success)
+SELECT '5'::hex256 < '5'::hex256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator gt (success)
+SELECT '5'::hex256 > '2'::hex256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gt (success)
+SELECT '5'::hex256 > '5'::hex256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lteq (success)
+SELECT '5'::hex256 <= '2'::hex256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator lteq (success)
+SELECT '5'::hex256 <= '5'::hex256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gteq (success)
+SELECT '5'::hex256 >= '2'::hex256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator gteq (success)
+SELECT '5'::hex256 >= '5'::hex256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator eq (success)
+SELECT '5'::hex256 = '2'::hex256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator eq (success)
+SELECT '5'::hex256 = '5'::hex256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator neq (success)
+SELECT '5'::hex256 <> '2'::hex256;
+ ?column? 
+----------
+ t
+(1 row)
+
+-- TEST -- operator neq (success)
+SELECT '5'::hex256 <> '5'::hex256;
+ ?column? 
+----------
+ f
+(1 row)
+
+-- TEST -- operator bitand (success)
+SELECT '5'::hex256 & '2'::hex256;
+ ?column? 
+----------
+ 0
+(1 row)
+
+-- TEST -- operator bitor (success)
+SELECT '5'::hex256 | '2'::hex256;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator bitxor (success)
+SELECT '5'::hex256 # '2'::hex256;
+ ?column? 
+----------
+ 7
+(1 row)
+
+-- TEST -- operator bitnot (success)
+SELECT ~('2'::hex256);
+                             ?column?                             
+------------------------------------------------------------------
+ fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffd
+(1 row)
+
+-- TEST -- operator bitshiftleft (success)
+SELECT '5'::hex256 << 2;
+ ?column? 
+----------
+ 14
+(1 row)
+
+-- TEST -- operator bitshiftright (success)
+SELECT '5'::hex256 >> 2;
+ ?column? 
+----------
+ 1
+(1 row)
+
+-- TEST -- cast hex256 as smallint (success)
+SELECT '5'::hex256::smallint;
+ int2 
+------
+    5
+(1 row)
+
+-- TEST -- cast hex256 as smallint (failure)
+SELECT :hex256_max::smallint;
+ERROR:  smallint out of range
+-- TEST -- cast hex256 as integer (success)
+SELECT '5'::hex256::integer;
+ int4 
+------
+    5
+(1 row)
+
+-- TEST -- cast hex256 as integer (failure)
+SELECT :hex256_max::integer;
+ERROR:  integer out of range
+-- TEST -- cast hex256 as bigint (success)
+SELECT '5'::hex256::bigint;
+ int8 
+------
+    5
+(1 row)
+
+-- TEST -- cast hex256 as bigint (failure)
+SELECT :hex256_max::bigint;
+ERROR:  bigint out of range
+-- TEST -- cast hex256 as int128 (success)
+SELECT '5'::hex256::int128;
+ int128 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast hex256 as int128 (failure)
+SELECT :hex256_max::int128;
+ERROR:  int128 out of range
+-- TEST -- cast hex256 as uint128 (success)
+SELECT '5'::hex256::uint128;
+ uint128 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast hex256 as uint128 (failure)
+SELECT :hex256_max::uint128;
+ERROR:  uint128 out of range
+-- TEST -- cast hex256 as int256 (success)
+SELECT '5'::hex256::int256;
+ int256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast hex256 as int256 (failure)
+SELECT :hex256_max::int256;
+ERROR:  int256 out of range
+-- TEST -- cast hex256 as uint256 (success)
+SELECT '5'::hex256::uint256;
+ uint256 
+---------
+ 5
+(1 row)
+
+-- TEST -- cast hex256 as hex160 (success)
+SELECT '5'::hex256::hex160;
+ hex160 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast hex256 as hex160 (failure)
+SELECT :hex256_max::hex160;
+ERROR:  hex160 out of range
+-- TEST -- cast smallint as hex256 (success)
+SELECT '5'::smallint::hex256;
+ hex256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast smallint as hex256 (failure)
+SELECT '-5'::smallint::hex256;
+ERROR:  hex256 out of range
+-- TEST -- cast integer as hex256 (success)
+SELECT '5'::integer::hex256;
+ hex256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast integer as hex256 (failure)
+SELECT '-5'::integer::hex256;
+ERROR:  hex256 out of range
+-- TEST -- cast bigint as hex256 (success)
+SELECT '5'::bigint::hex256;
+ hex256 
+--------
+ 5
+(1 row)
+
+-- TEST -- cast bigint as hex256 (failure)
+SELECT '-5'::bigint::hex256;
+ERROR:  hex256 out of range
